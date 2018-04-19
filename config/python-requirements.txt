@@ -1,0 +1,17 @@
+flask
+pandas
+requests
+
+### For XLBR:
+lxml
+numpy
+isodate
+regex
+openpyxl
+pyparsing
+python-dateutil
+six
+tornado
+matplotlib
+cherrypy
+

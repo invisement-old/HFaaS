@@ -1,0 +1,42 @@
+
+theme = "docuapi"
+
+# theme = "amp"
+# theme = "hugo-theme-learn"
+
+# theme = "mainroad" # simple beautiful for posts
+# theme = "blackburn" #blog with side
+
+
+
+themesdir = ".themes"
+contentDir = "content"
+publishDir = "pages"
+staticDir = "assets"
+dataDir = "hugo-data"
+#languageCode = "en-us"
+baseurl = "http://finmint.us/"
+title = "finMint"
+disableKinds = ["sitemap", "404", "robotsTXT", "taxonomyTerm","taxonomy","RSS"] #"page", "home", "section", "taxonomy", "taxonomyTerm", "RSS", "sitemap", "robotsTXT", "404"
+
+sectionPagesMenu = "main"
+
+###################### FOR docuapi THEME
+# Code higlighting settings
+pygmentsCodefences = true
+#pygmentsCodeFencesGuesSsyntax = false
+# pygmentsOptions = ""
+pygmentsStyle = "rrt"
+# The monokai stylesheet is included in the base template.
+#pygmentsUseClassic = true
+#pygmentsUseClasses=true
+
+[params]
+search = true
+
+# Configure the language example tabs.
+#[[params.language_tabs]]
+#key = "url"
+#name = "Download"
+
+
