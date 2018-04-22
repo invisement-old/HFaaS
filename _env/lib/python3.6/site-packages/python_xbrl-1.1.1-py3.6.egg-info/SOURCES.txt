@@ -1,0 +1,11 @@
+README.rst
+setup.cfg
+setup.py
+python_xbrl.egg-info/PKG-INFO
+python_xbrl.egg-info/SOURCES.txt
+python_xbrl.egg-info/dependency_links.txt
+python_xbrl.egg-info/requires.txt
+python_xbrl.egg-info/top_level.txt
+xbrl/__init__.py
+xbrl/gaap.py
+xbrl/xbrl.py

@@ -1,21 +1,24 @@
+import os
+import pandas as pd
 
 TAXONOMY_EXCEL = 'data/Taxonomy_2017Amended.xlsx'
-SEC_PRE_FILE = 'data/pre.txt'
+SEC_FILE = '_temp/num.txt'
 OUTPUT_STMT_TEMPLATE = 'data/stmt_template.csv'
+ARCHIVE_STMT_TEMPLATE = 'archive-data/stmt_template.csv'
 #LINK_TO_DOWNLOAD_EXCEL_FILE = http://www.fasb.org/jsp/FASB/Page/SectionPage&cid=1176168807223
-stmt_systemid = {
-    'IS': 'stm-soi-pre',
-    'BS': 'stm-sfp-cls-pre',
-    'CF': 'stm-scf-indir-pre',
-    'CI': 'stm-soc-pre',
-    'EQ': 'stm-sheci-pre'} #wrong
-stmt_size = {
-    'IS': 20,
+systemid_stmt = {
+    'stm-soi-pre': 'IS',
+    'stm-sfp-cls-pre': 'BS',
+    'stm-scf-indir-pre': 'CF',
+    'stm-soc-pre': 'CI',
+    'stm-sheci-pre':'EQ' } #wrong
+stmt_cutoff = {
+    'IS': 25,
     'BS': 25,
-    'CF': 20,
-    'CI': 15,
-    'EQ': 20,
-    'CP': 15
+    'CF': 15,
+    'CI': 10,
+    'EQ': 10,
+    'CP': 10
 }
 
 def create_stmt_templates ():
@@ -23,17 +26,19 @@ def create_stmt_templates ():
     using most popular tags from sec pre file and ordered by fasb.org taxonomy excel file.'''
     # read taxonomy, select only desired one (from stmt_systemid), drop duplicates, add stmt column, a line (order) column for each stmt
     taxonomy = pd.read_excel(TAXONOMY_EXCEL, sheet_name=1)
-    taxonomy = {stmt:taxonomy[taxonomy['systemid'].str.contains(systemid, na=False)].drop_duplicates('name').reset_index(drop=True) for stmt, systemid in stmt_systemid.items()}
+    taxonomy = {stmt:taxonomy[taxonomy['systemid'].str.contains(systemid, na=False)].drop_duplicates('name').reset_index(drop=True) for systemid, stmt in systemid_stmt.items()}
     taxonomy = pd.concat(taxonomy, names=['stmt', 'line']).reset_index().rename(columns={'name': 'tag'})
-    # read sec pre file, clean it ftom abstract tags, make count for each tag, choose most frequenct one based on stmt_size cut-off
-    pre = pd.read_csv(SEC_PRE_FILE, sep='\t')
-    pre = pre[~ pre['plabel'].str.contains("\[", na=False)]
-    pre = pre[~ pre['tag'].str.contains('Abstract', case=False, na=False, regex=False)]
-    pre = pre.filter(['stmt', 'adsh', 'tag']).drop_duplicates()
-    pre = pre.groupby(['stmt', 'tag']).count().reset_index()
-    pre = pre.groupby('stmt').apply(lambda x: x.nlargest(stmt_size.get(x.name,0), 'adsh')).reset_index(drop=True)
+    # read sec num file, make count for each tag, choose most frequent one
+    sec = pd.read_csv(SEC_FILE, sep='\t')
+    sec = sec['tag'].value_counts().nlargest(100).rename('adsh')
     # merge two dataframe and sort by line, and save
-    pre = pre.merge(taxonomy, on=['stmt', 'tag'], how='left').sort_values(['stmt', 'line'])
-    pre.to_csv (OUTPUT_STMT_TEMPLATE, index=False)
-    print('input taxonomy file:', TAXONOMY_EXCEL, 'and sec pre.txt file:', SEC_PRE_FILE, 'output saved in', OUTPUT_STMT_TEMPLATE)
+    sec = taxonomy.join(sec, on='tag', how='right').sort_values(['stmt', 'line'])
+    sec = sec.groupby('stmt').apply(lambda x: x.nlargest(stmt_cutoff.get(x.name,0), 'adsh')) # cut off for each stmt by stmt_cutoff
+    sec = sec.sort_values(['stmt', 'line']).reset_index(drop=True)
+    os.rename(OUTPUT_STMT_TEMPLATE, ARCHIVE_STMT_TEMPLATE) # move old to archive
+    pre.to_csv (OUTPUT_STMT_TEMPLATE, index=False) # save new template
+    #print('DONE! input taxonomy file: ', TAXONOMY_EXCEL, ' and sec pre.txt file: ', SEC_FILE, 'was used and output file saved in ', OUTPUT_STMT_TEMPLATE, ' and old file archived in ', ARCHIVE_STMT_TEMPLATE)
     return
+
+#pre.query('stmt=="CF"')[['tag', 'depth', 'adsh']]
+

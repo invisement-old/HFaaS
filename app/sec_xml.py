@@ -7,7 +7,7 @@ extracts data from sec submission in xml format and converts to dataframe, then 
 - facts_to_df: reshapes and cleans fact-table-like dataframes.
 '''
 
-from lxml import etree
+import xml.etree.ElementTree as etree
 from typing import List, Dict
 import pandas as pd
 import numpy as np
@@ -23,16 +23,16 @@ XMLNS_SEP = '_'
 PASS_NAMES = False
 STRIP = True
 PASS_NAMES_SEP = '.'
-COLS = ['cik', 'period', 'item', 'value', 'unit', 'decimals', 'date', 'qtrs']
+SEC_KEY = ['tag', 'unit', 'date', 'qtrs']
 FACT_GROUPS = ['gaap', 'dei']
 REF_GROUPS = ['context']
-SEC_FOLDER = '~/Documents/'
+#SEC_FOLDER = '~/Documents/'
 
-def extract (url: URL) -> None:
+def extract (url):
     ''' download xml page, convert xml to dicts format, convert them to dataframe, denormalize and clean, and save as csv files'''
     try: # download xml page containing SEC submission data
         table = pd.read_html(url, header=0)[1] # read table of contents
-        xml_name = table['Document'][table['Description'].str.contains('instance|.ins', case=False)].iloc[0] # select file name for xbrl instance
+        xml_name = table['Document'][table['Description'].str.contains('instance|.ins', case=False) | table['Type'].str.contains('.ins', case=False)].iloc[0] # select file name for xbrl instance
         xml_url = url[0:url.rfind('/')+1] + xml_name # add name to url base
         response = requests.get(xml_url) # get the xml page text
         response.raise_for_status() # raise if error
@@ -42,16 +42,25 @@ def extract (url: URL) -> None:
         print(e)
         return
     groups = extract_flat_dicts_from_sec_xml (xml_page) # extract key-value pairs from xml
-    for g in ['gaap']: # converts values to numeric and clean NAs
-        groups[g]['value'] = pd.to_numeric(groups[g]['value'], errors='coerce', downcast='float')
-        groups[g] = groups[g].dropna(subset=['value'])
-    for ref in REF_GROUPS: # denormalize fact dataframes using refs
-        for fact in FACT_GROUPS:
-            groups[fact] = groups[fact].join(groups[ref], on=ref).filter(COLS)
-    for g in FACT_GROUPS: # save as csv
-        groups[g].to_csv (SEC_FOLDER + xml_name.replace('_html.xml', '').replace('.xml', '')+'_'+g+'.csv', index=False)
-    print('Everything went successfully. All csv files for gaap and dei and context were saved in', SEC_FOLDER, 'for', xml_name)
-    return
+    facts = [df for g, df in groups.items() if g in FACT_GROUPS]
+    refs = [df for g, df in groups.items() if g in REF_GROUPS]
+    fact = pd.concat(facts)
+    ref = pd.concat(refs)
+    fact = fact.join (ref , on='context').filter(SEC_KEY+['value', 'cik'])
+    return fact
+    # pd.concat[list(groups[FACT_GROUPS])]
+    # for g in ['gaap']: # converts values to numeric and clean NAs
+    #     groups[g]['value'] = pd.to_numeric(groups[g]['value'], errors='coerce', downcast='float')
+    #     groups[g] = groups[g].dropna(subset=['value'])
+    
+    # for ref in REF_GROUPS: # denormalize fact dataframes using refs
+    #     for fact in FACT_GROUPS:
+    #         groups[fact] = groups[fact].join(groups[ref], on=ref).filter(SEC_KEY+['value', 'cik'])
+    # return FACT_GROUPS
+    #for g in FACT_GROUPS: # save as csv
+    #    groups[g].to_csv (SEC_FOLDER + xml_name.replace('_html.xml', '').replace('.xml', '')+'_'+g+'.csv', index=False)
+    #print('Everything went successfully. All csv files for gaap and dei and context were saved in', SEC_FOLDER, 'for', xml_name)
+    #return
 
 def extract_flat_dicts_from_sec_xml (xml: bytes) -> DICDIC:
     ''' converts sec xml submission file to list of dictionary that has all components. a.b means namespance a and name b. '''
@@ -71,12 +80,12 @@ def facts_to_df (facts: DICTS) -> pd.DataFrame:
         for key in list(dic.keys()):
             s = key.split(XMLNS_SEP) # columns with XMLNS_SEP are variables
             if len(s)==2: # a hack to create long dataframe instead of pushing all fields to columns
-                dic['item'] = s[1]
+                dic['tag'] = s[1]
                 dic['value'] = dic[key]
                 del (dic[key])
     return pd.DataFrame(facts).rename(columns=str.lower).rename(columns={'unitref': 'unit', 'contextref': 'context'})
 
-def xml_to_dict (xml: et, dic: PAIRS) -> PAIRS:
+def xml_to_dict (xml, dic: PAIRS) -> PAIRS:
     ''' Recursively finds the most inner key:value pairs and collects them in a dictionary '''
     element_dict = dict(xml.attrib, **{xml.tag:xml.text}) # make a dictionary out of et attributes and tag
     if STRIP==True: # clean and strip dicts
@@ -89,16 +98,15 @@ def xml_to_dict (xml: et, dic: PAIRS) -> PAIRS:
     return dic
 
 def refs_to_df (refs: DICTS) -> pd.DataFrame:
-    ''' from ref DICTS, extract context dataframe with columns: cik identifier, date and period, and number of quarters.'''
+    ''' from ref DICTS, extract context dataframe with columns: cik identifier, date, and number of quarters.'''
     context = pd.DataFrame(refs) # convert dicts to dataframe
     ref_cols = ['id', 'identifier', 'instant', 'startdate', 'enddate'] # targeted columns
     col_match = {next((i for i in context.columns if i.lower().endswith(col)), None):col for col in ref_cols} # match context column names with ref_cols
     context = context.rename(columns = col_match).filter(ref_cols).set_index('id').rename(columns={'identifier': 'cik'}) # select ref_cols and clean
     for col in ['startdate', 'enddate']: # to_datetime
-        context[col] = pd.to_datetime(context[col])
+        context[col] = pd.to_datetime(context[col], errors='coerce')
     context['qtrs'] = (context['enddate']-context['startdate'])/np.timedelta64(3, 'M') # calculate durations (in quarter) 
     context['qtrs'] = context['qtrs'].round() # round it up
-    context['date'] = pd.to_datetime(context['enddate'].fillna(context['instant'])) # col date is either enddate or instant, used to_datetime to hack NAs
-    context['period'] = context['date'].dt.to_period('Q') # convert to quarters
-    return context[['cik', 'period', 'date', 'qtrs']]
+    context['date'] = pd.to_datetime(context['enddate'].fillna(context['instant']), errors='coerce') # col date is either enddate or instant, used to_datetime to hack NAs
+    return context[['cik', 'date', 'qtrs']]
 

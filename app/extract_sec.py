@@ -1,91 +1,122 @@
-'''
-extract dataframe sec from SEC zip files
-    - extract(sec_unzip_path): extract sec dataframe from unzip path
-    - update(): extracts all new sec zip files and update sec file
-    - to_fiscal(): converts date to fiscal quarter of company
-usage: update()
-'''
 
-def update ():   
-    ''' find new sec zip files, extract them, update old sec with new secs, archive old sec and new zip files '''
-    sec = read_old_sec_and_archive_it() 
-    new_urls = find_new_secs()
-    for url in sorted(new_urls):
-        try: # extract new sec and update sec
-            print ("Extracting", url, "and updating sec.")
-            req = requests.get (url) # get zip file from url 
-            zipfile.ZipFile(io.BytesIO(req.content)).extractall(TEMP) # unzip content to TEMP
-            new_sec = extract (sec_unzip_path = TEMP) # extract new sec
-            sec = pd.concat([sec, new_sec], axis=0, join='outer') # append to sec
-            sec = sec.drop_duplicates(subset=SEC_KEY, keep='last') # drop duplicates
-            sec.to_csv(SEC_FILE, index=False)
-            open(ARCHIVE_PATH + os.path.basename(url), 'wb').write(req.content) # write zip file to archive 
-        except Exception as e:
-            print("ERROR: extraction or update was not possible for", url, "error message:", e)
-
-import requests, zipfile, io, pandas as pd, numpy as np, lxml.html as html, os, typing, shutil
+import pandas as pd
+import requests
+import zipfile
+import io, os
+from lxml import html
+import app.sec_xml as sx
+import json
 
 SEC_DATA_SETS_INDEX = "https://www.sec.gov/dera/data/financial-statement-data-sets.html"
-ARCHIVE_PATH = ".archive/"
-TEMP = "./.temp/"
-URL = str
-PATH = str
-SEC_KEY = ['cik', 'stmt', 'item', 'date', 'qtrs', 'uom']
-SEC_COLS = SEC_KEY + ['value', 'fiscal', 'report', 'line']
-CIK2TICKER_FILE = "./data/cik2ticker.csv"
-SEC_FILE = "data/sec.csv"
+TEMP = "_temp/"
+SEC_FOLDER = 'data/sec/'
+ARCHIVE_DATA = 'archive-data/'
+SEC_KEY = ['tag', 'date', 'qtrs', 'unit']
 ENCODING = 'latin'
+NEW_SUBMISSIONS = 'https://www.sec.gov/Archives/edgar/full-index/form.idx'
+OLD_SUBMISSIONS = 'archive-data/form_idx.csv'
+DATA_SETTING = 'data/data-setting.json'
+SEC_ZIP_ARCHIVES = 'sec_zip_archives'
 
-def read_old_sec_and_archive_it():
-    try:
-        old_sec = pd.read_csv(SEC_FILE)
-        print ("old sec was found")
-        shutil.move(SEC_FILE, ARCHIVE_PATH+os.path.basename(SEC_FILE))
-        print ("old sec file was archived in sec_archive")
-    except Exception as e:
-        print ("old sec file was not found so we assumed it does not exist.", e)
-        old_sec = None
-    return old_sec
+def update_sec_from_zips ():
+    ''' find new sec zip files, extract them, update old sec with new secs, archive old sec and new zip files '''
+    with open(DATA_SETTING, 'w+') as jfile:
+        setting = json.load(jfile)
+    archives = setting.get(SEC_ZIP_ARCHIVES, [])
+    new_urls = find_new_zip_secs(archives)
+    for url in sorted(new_urls):
+        try: # extract new sec and update sec
+            #print ("Extracting", url, "and updating sec.")
+            req = requests.get (url) # get zip file from url 
+            zipfile.ZipFile(io.BytesIO(req.content)).extractall(TEMP) # unzip content to TEMP
+            num = pd.read_csv (TEMP+'num.txt', sep='\t', encoding=ENCODING).rename(columns={'ddate': 'date', 'uom': 'unit'})
+            sub = pd.read_csv (TEMP+'sub.txt', sep='\t', encoding=ENCODING).set_index('adsh')['cik'].astype(str)
+            num = num.join(sub, on='adsh', how='inner')
+            for cik, new in num.groupby('cik'):
+                update_and_replace(new, cik)
+            setting[SEC_ZIP_ARCHIVES] = setting[SEC_ZIP_ARCHIVES] + [os.path.basename(url)]
+            with open(DATA_SETTING, 'w') as jfile:
+                json.dump(setting, jfile)
+            # f = open(ARCHIVE_DATA + os.path.basename(url), 'wb')
+            # f.write(req.content) # write zip file to archive 
+            # f.close()
+        except Exception as e:
+            print("ERROR: extraction or update was not possible for", url, "error message:", e)
+    return
 
-def find_new_secs() -> typing.List[URL]:
+def find_new_zip_secs(archives):
     ''' scrapes all sec zip files from url of sec data sets 
         and excludes the files that are in sec archive '''
     zip_urls = html.fromstring(requests.get(SEC_DATA_SETS_INDEX).content).xpath('//tr/td/a//@href') # read sec page and find urls in table
     zip_urls = ["https://www.sec.gov"+url for url in zip_urls]
-    archives = os.listdir(ARCHIVE_PATH) # get all sec files in archive
-    new_zip_files = [url for url in zip_urls if os.path.basename(url) not in archives] # exclude archives from urls
-    return new_zip_files
+    # archives = os.listdir(ARCHIVE_DATA) # get all sec files in archive
+    new_zip_urls = [url for url in zip_urls if os.path.basename(url) not in archives] # exclude archives from urls
+    return new_zip_urls
 
-def extract (sec_unzip_path: PATH = TEMP, encoding=ENCODING) -> pd.DataFrame:
-    ''' sec zip file is unzipped to folder, extract it to SEC dataframe format with desired columns '''
-    ##### read num, pre, sub, cik2ticker; 
-    num = (
-        pd.read_table(TEMP+"num.txt", encoding=encoding) 
-        .query('value.notnull() & value != 0')
-        #.query('coreg.notnull()') # filter submitted as a coregistrant
-        #num[num['ddate']<=int(dt.now().strftime('%Y%m%d'))] # filter values for future date
-    )
-    pre = (
-        pd.read_table(TEMP+"pre.txt", encoding=encoding)
-        .query('plabel.notnull()')
-        #.query('stmt==["BS", "IS", "CF", "EQ", "CI"]')
-    )
-    #tag = pd.read_table (secPath+"tag.txt", encoding=encode)
-    sub = (
-        pd.read_table(TEMP+"sub.txt", encoding=encoding)
-        #.query('form==["10-K", "10-Q", "10-K/A", "10-Q/A"]')
-    )
-    ##### merge all to df; create stamp and fiscal; filter desired columns; 
-    new_sec = num.merge(pre, on=["adsh", "tag", "version"], how="inner"
-        ).merge(sub, on="adsh", how="inner"
-        ).rename(columns={'plabel':'item', 'ddate':'date'}
-        ).assign(fiscal = lambda x: to_fiscal(x.date, x.fye)
-        ).filter(SEC_COLS)
-    return new_sec
+'''
+def dispatch_new_zip_sec ():
+    num = pd.read_csv (TEMP+'num.txt', sep='\t', encoding=ENCODING).rename(columns={'ddate': 'date'})
+    sub = pd.read_csv (TEMP+'sub.txt', sep='\t', encoding=ENCODING).set_index('adsh')['cik']
+    num = num.join(sub, on='adsh', how='inner')
+    for cik, new in num.groupby('cik'):
+        file_name = SEC_FOLDER+cik+'.csv.gz'
+        new = new.sort_values(SEC_KEY+['coreg'], na_position='first')
+        new = new.filter(SEC_KEY+['value'])
+        try:
+            old = pd.read_csv(file_name, compression='gzip')
+        except Exception:
+            old = None
+            print('Warning, we could not find file ', file_name, ' so we created a new file.')
+        new = pd.concat([new, old]).drop_duplicates(SEC_KEY)
+        new.to_csv(file_name, index=False, compression='gzip')
+    return
+'''
 
-def to_fiscal (dates: int, fYearEnd: int) -> int:
-    ''' Calculates the fiscal quarter for each date given the endyear'''
-    month = dates // 100 % 100
-    fmonth = fYearEnd // 100
-    fquarter = (11 + month - fmonth) // 3 % 4 + 1
-    return fquarter
+############# PART TWO: UPDATE XMLS FILES
+def update_sec_from_xml ():
+    submissions = pd.read_fwf(NEW_SUBMISSIONS, skiprows=[0,1,2,3,4,5,6,7, 9]).rename(columns = {'File Name': 'File', 'Form Type': 'Form'})
+    files = find_new_xml_submissions (submissions)
+    path = files.apply(os.path.dirname)
+    name = files.apply(os.path.basename)
+    #cik = name.str.split('-|_', expand=True)[0]
+    adsh = name.str.replace('-|\..*', '') # replace 123-1234-234.txt with 1231234234
+    urls = 'https://www.sec.gov/Archives/' + path +'/' + adsh + '/'+ name.str.replace('\..*', '-index.html')
+    #urls.index = urls.index.astype(str).str.zfill(10)
+    for cik, url in urls.iteritems():
+        try:
+            #print("extracting: ", url)
+            new = sx.extract (url)
+            new['value'] = pd.to_numeric(new['value'], errors='coerce', downcast='float')
+            new = new.dropna(subset=['value'])
+            new = new.filter(SEC_KEY+['value']).drop_duplicates(SEC_KEY)
+            update_and_replace (new, cik)
+        except Exception:
+            print("ERROR! Could not update ", cik, "from url ", url)
+    submissions.to_csv (OLD_SUBMISSIONS, index=False)
+    return
+
+def find_new_xml_submissions (submissions):
+    #submissions = pd.read_fwf(NEW_SUBMISSIONS, skiprows=[0,1,2,3,4,5,6,7, 9]).rename(columns = {'File Name': 'File', 'Form Type': 'Form'})
+    try:
+        old = pd.read_csv (OLD_SUBMISSIONS)
+        #old = pd.read_fwf(OLD_SUBMISSIONS, skiprows=[0,1,2,3,4,5,6,7, 9]).rename(columns = {'File Name': 'File', 'Form Type': 'Form'})
+        used = submissions['File'].isin(old['File'])
+        submissions = submissions[~used]
+    except Exception:
+        print ('WARNING! could not find old submission file ', OLD_SUBMISSIONS)
+    submissions['CIK'] = submissions['CIK'].astype(str)
+    submissions = submissions.query('Form in ["10-K", "10-Q"]').set_index('CIK')['File']
+    return submissions
+
+def update_and_replace (new, cik):
+    file_name = SEC_FOLDER+cik+'.csv.gz'
+    new = new.filter(SEC_KEY+['value'])
+    try:
+        old = pd.read_csv(file_name, compression='gzip')
+    except Exception:
+        old = None
+        print('Warning, we could not find file ', file_name, ' so we created a new file.')
+    new = pd.concat([new, old]).drop_duplicates(SEC_KEY)
+    new.to_csv(file_name, index=False, compression='gzip')
+    return
+
