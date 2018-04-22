@@ -20,7 +20,7 @@ SEC_ZIP_ARCHIVES = 'sec_zip_archives'
 
 def update_sec_from_zips ():
     ''' find new sec zip files, extract them, update old sec with new secs, archive old sec and new zip files '''
-    with open(DATA_SETTING, 'w+') as jfile:
+    with open(DATA_SETTING, 'a+') as jfile:
         setting = json.load(jfile)
     archives = setting.get(SEC_ZIP_ARCHIVES, [])
     new_urls = find_new_zip_secs(archives)
@@ -35,7 +35,7 @@ def update_sec_from_zips ():
             for cik, new in num.groupby('cik'):
                 update_and_replace(new, cik)
             setting[SEC_ZIP_ARCHIVES] = setting[SEC_ZIP_ARCHIVES] + [os.path.basename(url)]
-            with open(DATA_SETTING, 'w') as jfile:
+            with open(DATA_SETTING, 'w+') as jfile:
                 json.dump(setting, jfile)
             # f = open(ARCHIVE_DATA + os.path.basename(url), 'wb')
             # f.write(req.content) # write zip file to archive 

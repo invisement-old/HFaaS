@@ -2,7 +2,7 @@
 # execude without sudo please to avoid $HOME change
 echo "Sync and upgrading finmint source files and services are started!"
 date
-#gcloud compute ssh ali@sec
+gcloud compute ssh ali@sec
 cd ~/PROJECTS/Finmint/
 git fetch
 git merge master/origin

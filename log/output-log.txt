@@ -1,1 +1,5 @@
 Log file for finmint
+Daily Script Started!
+Sun Apr 22 13:42:48 PDT 2018
+Daily Script Finished, hopefully, successfully!
+Sun Apr 22 13:42:48 PDT 2018
