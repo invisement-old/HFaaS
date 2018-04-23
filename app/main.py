@@ -32,8 +32,6 @@ importlib.reload(xt)
 xt.update_sec_from_zips()
 xt.update_sec_from_xml()
 
-SOMEHOW SAVE XML SUBMISSIONS form.idx TO ARCHIVE
-
 ########
 g = sx.extract(url)
 mport app.stmt_templates as tmpl

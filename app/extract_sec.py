@@ -8,7 +8,7 @@ import app.sec_xml as sx
 import json
 
 SEC_DATA_SETS_INDEX = "https://www.sec.gov/dera/data/financial-statement-data-sets.html"
-TEMP = "_temp/"
+TEMP = ".temp/"
 SEC_FOLDER = 'data/sec/'
 ARCHIVE_DATA = 'archive-data/'
 SEC_KEY = ['tag', 'date', 'qtrs', 'unit']

@@ -2,7 +2,7 @@ import os
 import pandas as pd
 
 TAXONOMY_EXCEL = 'data/Taxonomy_2017Amended.xlsx'
-SEC_FILE = '_temp/num.txt'
+SEC_FILE = '.temp/num.txt'
 OUTPUT_STMT_TEMPLATE = 'data/stmt_template.csv'
 ARCHIVE_STMT_TEMPLATE = 'archive-data/stmt_template.csv'
 #LINK_TO_DOWNLOAD_EXCEL_FILE = http://www.fasb.org/jsp/FASB/Page/SectionPage&cid=1176168807223

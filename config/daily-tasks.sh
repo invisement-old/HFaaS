@@ -1,11 +1,11 @@
 #!/bin/bash
-echo "Daily Script Started!" >> log/output-log.txt
-date >> log/output-log.txt
+echo "Daily Script Started!"
+date
 cd ~/PROJECTS/Finmint
-source _env/bin/activate
+source .env/bin/activate
 # python -c "import company; company.test();"
-python -c "import app.extract_sec as xt; xt.update_sec_from_xml(); xt.update_sec_from_zips()" >> log/output-log.txt
+python -c "import app.extract_sec as xt; xt.update_sec_from_xml(); xt.update_sec_from_zips()"
 deactivate
-echo "Daily Script Finished, hopefully, successfully!" >> log/output-log.txt
-date >> log/output-log.txt
+echo "Daily Script Finished, hopefully, successfully!"
+date
 
