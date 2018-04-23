@@ -12,7 +12,7 @@ TEMP = ".temp/"
 SEC_FOLDER = 'data/sec/'
 ARCHIVE_DATA = 'archive-data/'
 SEC_KEY = ['tag', 'date', 'qtrs', 'unit']
-ENCODINGS = ['cp1252', 'utf-8', 'latin1', 'utf-16']
+ENCODING = 'latin1'
 NEW_SUBMISSIONS = 'https://www.sec.gov/Archives/edgar/full-index/form.idx'
 OLD_SUBMISSIONS = 'archive-data/form_idx.csv'
 DATA_SETTING = 'data/data-setting.json'
@@ -35,19 +35,12 @@ def update_sec_from_zips ():
             req.raise_for_status()
             zipfile.ZipFile(io.BytesIO(req.content)).extractall(TEMP) # unzip content to TEMP
             print("zip file extracted!")
-            for encode in ENCODINGS:
-                try: 
-                    print("extracting files with encoding: ", encode)
-                    num = pd.read_csv (TEMP+'num.txt', sep='\t', encoding=encode).rename(columns={'ddate': 'date', 'uom': 'unit'})
-                    sub = pd.read_csv (TEMP+'sub.txt', sep='\t', encoding=encode).set_index('adsh')['cik'].astype(str)
-                    break
-                except Exception as e:
-                    print ("encoding ", encode, " did not work!")
-            num = num.join(sub, on='adsh', how='inner')
-            print ("dispaching to files started")
-            for cik, new in num.groupby('cik'):
-                update_and_replace(new, cik)
-            print("archiving the zip file.")
+            sub = pd.read_csv (TEMP+'sub.txt', sep='\t', encoding=ENCODING).set_index('adsh')['cik'].astype(str)
+            chunks = pd.read_csv (TEMP+'num.txt', sep='\t', chunksize=100000, encoding=ENCODING).rename(columns={'ddate': 'date', 'uom': 'unit'})
+            for num in chunks:
+                num = num.join(sub, on='adsh', how='inner')
+                for cik, new in num.groupby('cik'):
+                    update_and_replace(new, cik)
             archives = archives + [os.path.basename(url)]
             setting[SEC_ZIP_ARCHIVES] = archives
             with open(DATA_SETTING, 'w+') as jfile:
