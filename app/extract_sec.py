@@ -38,8 +38,8 @@ def update_sec_from_zips ():
             for encode in ENCODINGS:
                 try: 
                     print("extracting files with encoding: ", encode)
-                    num = pd.read_csv (TEMP+'sub.txt', sep='\t', encoding=ENCODING).rename(columns={'ddate': 'date', 'uom': 'unit'})
-                    sub = pd.read_csv (TEMP+'sub.txt', sep='\t', encoding=ENCODING).set_index('adsh')['cik'].astype(str)
+                    num = pd.read_csv (TEMP+'sub.txt', sep='\t', encoding=encode).rename(columns={'ddate': 'date', 'uom': 'unit'})
+                    sub = pd.read_csv (TEMP+'sub.txt', sep='\t', encoding=encode).set_index('adsh')['cik'].astype(str)
                     break
                 except Exception as e:
                     print ("encoding ", encode, " did not work!")
