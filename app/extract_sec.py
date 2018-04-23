@@ -30,14 +30,16 @@ def update_sec_from_zips ():
     new_urls = find_new_zip_secs(archives)
     for url in sorted(new_urls):
         try: # extract new sec and update sec
-            #print ("Extracting", url, "and updating sec.")
+            print ("Extracting", url, "and updating sec.")
             req = requests.get (url) # get zip file from url 
             zipfile.ZipFile(io.BytesIO(req.content)).extractall(TEMP) # unzip content to TEMP
             num = pd.read_csv (TEMP+'num.txt', sep='\t', encoding=ENCODING).rename(columns={'ddate': 'date', 'uom': 'unit'})
             sub = pd.read_csv (TEMP+'sub.txt', sep='\t', encoding=ENCODING).set_index('adsh')['cik'].astype(str)
             num = num.join(sub, on='adsh', how='inner')
+            print ("dispaching to files started")
             for cik, new in num.groupby('cik'):
                 update_and_replace(new, cik)
+            print("archiving the zip file.")
             archives = archives + [os.path.basename(url)]
             setting[SEC_ZIP_ARCHIVES] = archives
             with open(DATA_SETTING, 'w+') as jfile:
