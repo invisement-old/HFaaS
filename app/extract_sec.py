@@ -20,8 +20,12 @@ SEC_ZIP_ARCHIVES = 'sec_zip_archives'
 
 def update_sec_from_zips ():
     ''' find new sec zip files, extract them, update old sec with new secs, archive old sec and new zip files '''
-    with open(DATA_SETTING, 'a+') as jfile:
-        setting = json.load(jfile)
+    try:
+        with open(DATA_SETTING, 'r') as jfile:
+            setting = json.load(jfile)
+    except:
+        print ("Error! it seems you do noy have ", DATA_SETTING, "file. Copy one or create empty json object {}")
+        raise Exception("create data setting file")
     archives = setting.get(SEC_ZIP_ARCHIVES, [])
     new_urls = find_new_zip_secs(archives)
     for url in sorted(new_urls):
@@ -34,7 +38,8 @@ def update_sec_from_zips ():
             num = num.join(sub, on='adsh', how='inner')
             for cik, new in num.groupby('cik'):
                 update_and_replace(new, cik)
-            setting[SEC_ZIP_ARCHIVES] = setting[SEC_ZIP_ARCHIVES] + [os.path.basename(url)]
+            archives = archives + [os.path.basename(url)]
+            setting[SEC_ZIP_ARCHIVES] = archives
             with open(DATA_SETTING, 'w+') as jfile:
                 json.dump(setting, jfile)
             # f = open(ARCHIVE_DATA + os.path.basename(url), 'wb')
