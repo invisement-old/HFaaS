@@ -12,7 +12,7 @@ TEMP = ".temp/"
 SEC_FOLDER = 'data/sec/'
 ARCHIVE_DATA = 'archive-data/'
 SEC_KEY = ['tag', 'date', 'qtrs', 'unit']
-ENCODING = 'latin'
+ENCODING = 'latin1'
 NEW_SUBMISSIONS = 'https://www.sec.gov/Archives/edgar/full-index/form.idx'
 OLD_SUBMISSIONS = 'archive-data/form_idx.csv'
 DATA_SETTING = 'data/data-setting.json'
@@ -35,9 +35,9 @@ def update_sec_from_zips ():
             req.raise_for_status()
             zipfile.ZipFile(io.BytesIO(req.content)).extractall(TEMP) # unzip content to TEMP
             print("zip file extracted!")
-            num = pd.read_csv (TEMP+'num.txt', sep='\t').rename(columns={'ddate': 'date', 'uom': 'unit'})
+            num = pd.read_csv (TEMP+'num.txt', sep='\t', encoding=ENCODING).rename(columns={'ddate': 'date', 'uom': 'unit'})
             print("num is extracted, encoding is fine")
-            sub = pd.read_csv (TEMP+'sub.txt', sep='\t').set_index('adsh')['cik'].astype(str)
+            sub = pd.read_csv (TEMP+'sub.txt', sep='\t', encoding=ENCODING).set_index('adsh')['cik'].astype(str)
             num = num.join(sub, on='adsh', how='inner')
             print ("dispaching to files started")
             for cik, new in num.groupby('cik'):
