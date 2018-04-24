@@ -35,7 +35,7 @@ def update_sec_from_zips ():
             req.raise_for_status()
             zipfile.ZipFile(io.BytesIO(req.content)).extractall(TEMP) # unzip content to TEMP
             sub = pd.read_csv (TEMP+'sub.txt', sep='\t', encoding=ENCODING).set_index('adsh')['cik'].astype(str)
-            chunks = pd.read_csv (TEMP+'num.txt', sep='\t', chunksize=10000, encoding=ENCODING)
+            chunks = pd.read_csv (TEMP+'num.txt', sep='\t', chunksize=1000, encoding=ENCODING)
             for num in chunks:
                 num = num.join(sub, on='adsh', how='inner').rename(columns={'ddate': 'date', 'uom': 'unit'})
                 for cik, new in num.groupby('cik'):
