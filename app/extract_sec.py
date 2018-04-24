@@ -34,9 +34,8 @@ def update_sec_from_zips ():
             req = requests.get (url) # get zip file from url 
             req.raise_for_status()
             zipfile.ZipFile(io.BytesIO(req.content)).extractall(TEMP) # unzip content to TEMP
-            print("zip file extracted!")
             sub = pd.read_csv (TEMP+'sub.txt', sep='\t', encoding=ENCODING).set_index('adsh')['cik'].astype(str)
-            chunks = pd.read_csv (TEMP+'num.txt', sep='\t', chunksize=100000, encoding=ENCODING)
+            chunks = pd.read_csv (TEMP+'num.txt', sep='\t', chunksize=10000, encoding=ENCODING)
             for num in chunks:
                 num = num.join(sub, on='adsh', how='inner').rename(columns={'ddate': 'date', 'uom': 'unit'})
                 for cik, new in num.groupby('cik'):
@@ -45,9 +44,6 @@ def update_sec_from_zips ():
             setting[SEC_ZIP_ARCHIVES] = archives
             with open(DATA_SETTING, 'w+') as jfile:
                 json.dump(setting, jfile)
-            # f = open(ARCHIVE_DATA + os.path.basename(url), 'wb')
-            # f.write(req.content) # write zip file to archive 
-            # f.close()
         except Exception as e:
             print("ERROR: extraction or update was not possible for", url, "error message:", e)
     return
@@ -60,25 +56,6 @@ def find_new_zip_secs(archives):
     # archives = os.listdir(ARCHIVE_DATA) # get all sec files in archive
     new_zip_urls = [url for url in zip_urls if os.path.basename(url) not in archives] # exclude archives from urls
     return new_zip_urls
-
-'''
-def dispatch_new_zip_sec ():
-    num = pd.read_csv (TEMP+'num.txt', sep='\t', encoding=ENCODING).rename(columns={'ddate': 'date'})
-    sub = pd.read_csv (TEMP+'sub.txt', sep='\t', encoding=ENCODING).set_index('adsh')['cik']
-    num = num.join(sub, on='adsh', how='inner')
-    for cik, new in num.groupby('cik'):
-        file_name = SEC_FOLDER+cik+'.csv.gz'
-        new = new.sort_values(SEC_KEY+['coreg'], na_position='first')
-        new = new.filter(SEC_KEY+['value'])
-        try:
-            old = pd.read_csv(file_name, compression='gzip')
-        except Exception:
-            old = None
-            print('Warning, we could not find file ', file_name, ' so we created a new file.')
-        new = pd.concat([new, old]).drop_duplicates(SEC_KEY)
-        new.to_csv(file_name, index=False, compression='gzip')
-    return
-'''
 
 ############# PART TWO: UPDATE XMLS FILES
 def update_sec_from_xml ():
