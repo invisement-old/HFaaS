@@ -1,0 +1,7 @@
+# How-To
+
+## Update ops machine
+- ~/PROJECTS/Finmint/config/update-ops.sh
+
+## Update paid machine
+- ~/PROJECTS/Finmint/config/update-paid.sh

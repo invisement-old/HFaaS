@@ -1,7 +1,37 @@
-# HFaaS
+# finMint
 Hedge Fund As A Service
 - We trust in machine
 - Machine Learning for Finance
+
+## Architecture
+It deploys these components
+- dev: my local machine
+    - ali@fedora
+    - Linux Fedora with git, python 3.6, bash, gsutil, hugo, markdown
+    - For everything and development and test
+- control: google compute engine free micro machine
+    - ali@sec
+    - Just for scheduling and controling jobs in other machies
+    - Sometimes as a light prototype machine such as flask microservice server
+    - Linux Debian Stretch, bash and cron, gsutil
+- paid (modeler): google compute 13gb 2vCPU machine
+    - ali@paid
+    - runs daily jobs assigned by Control and go to bed
+    - gets new models (python codes) from git when Dev says
+    - python 3.6, git
+- static/blob: google storage
+    - gs://sec.finmint.us
+    - for holding static .csv file precompressed and serving http
+- dns: google domain
+    - sec.finmint.us to google storage
+- git: in github.com/finmint/sec
+    - for version control hub of every code
+    - exclude file (in config folder) excludes all files inside data and dot (*data/* and .*/*)
+
+Backup plan:
+    - codes are in 3 places: dev, github, paid
+    - data are in 2 places: paid (files), static (compressed objects)
+
 _________________
 ## Files and Folders
 - DevCodes: all devcodes, shared on github

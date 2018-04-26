@@ -7,16 +7,7 @@ from lxml import html
 import app.sec_xml as sx
 import json
 
-SEC_DATA_SETS_INDEX = "https://www.sec.gov/dera/data/financial-statement-data-sets.html"
-TEMP = ".temp/"
-SEC_FOLDER = 'data/sec/'
-ARCHIVE_DATA = 'archive-data/'
-SEC_KEY = ['tag', 'date', 'qtrs', 'unit']
-ENCODING = 'latin1'
-NEW_SUBMISSIONS = 'https://www.sec.gov/Archives/edgar/full-index/form.idx'
-OLD_SUBMISSIONS = 'archive-data/form_idx.csv'
-DATA_SETTING = 'data/data-setting.json'
-SEC_ZIP_ARCHIVES = 'sec_zip_archives'
+from app import *
 
 def update_sec_from_zips ():
     ''' find new sec zip files, extract them, update old sec with new secs, archive old sec and new zip files '''
@@ -34,8 +25,8 @@ def update_sec_from_zips ():
             req = requests.get (url) # get zip file from url 
             req.raise_for_status()
             zipfile.ZipFile(io.BytesIO(req.content)).extractall(TEMP) # unzip content to TEMP
-            sub = pd.read_csv (TEMP+'sub.txt', sep='\t', encoding=ENCODING).set_index('adsh')['cik'].astype(str)
-            chunks = pd.read_csv (TEMP+'num.txt', sep='\t', chunksize=1000, encoding=ENCODING)
+            sub = pd.read_csv (TEMP+'sub.txt', sep='\t', encoding=SEC_ENCODING).set_index('adsh')['cik'].astype(str)
+            chunks = pd.read_csv (TEMP+'num.txt', sep='\t', chunksize=1000, encoding=SEC_ENCODING)
             for num in chunks:
                 num = num.join(sub, on='adsh', how='inner').rename(columns={'ddate': 'date', 'uom': 'unit'})
                 for cik, new in num.groupby('cik'):

@@ -37,3 +37,57 @@ g = sx.extract(url)
 mport app.stmt_templates as tmpl
 tmpl.create_stmt_templates()
 
+
+#########
+import wget
+import time
+import os
+import requests
+
+url = "http://sec.finmint.us/1000180.csv.gz"
+url = "https://www.google.com"
+url = 'http://www.futurecrew.com/skaven/song_files/mp3/razorback.mp3'
+
+import urllib.request
+
+
+t0 = time.time()
+os.system("wget "+url)
+t1 = time.time()
+res = requests.get(url)
+with open("test.csv", 'wb') as out_file:
+    out_file.write(res.content)
+
+t0 = time.time()
+os.system("gsutil cp -Z test.csv gs://sec.finmint.us")
+t1 = time.time()
+open("test.csv", "wb").write(requests.get(url).content)
+t2 = time.time()
+print(t1-t0, t2-t1)
+import pandas as pd
+
+############
+import asyncio
+import time
+import requests
+loop = asyncio.new_event_loop()
+asyncio.set_event_loop(loop)
+
+urls = ['http://www.google.com', "http://www.nytimes.com",  "http://www.microsoft.com", "http://www.cnn.com", 'http://www.yandex.ru', 'http://www.python.org']
+
+async def call_url(url):
+    print('Starting {}'.format(url))
+    #response = requests.get(url)
+    response = await loop.run_in_executor(None, requests.get, url)
+    #data = yield from response.text
+    #print('{}: {} bytes: {}'.format(url, len(data), data))
+    return response.text
+
+t0 = time.time()
+futures = [call_url(url) for url in urls]
+res, _ = loop.run_until_complete(asyncio.wait(futures))
+a = [x.result() for x in res]
+t1 = time.time()
+t1-t0
+
+###

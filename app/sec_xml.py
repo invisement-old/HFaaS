@@ -14,19 +14,13 @@ import numpy as np
 import requests
 import time
 
+from app import * # import global variables
+
 URL = str
 PRIMES = (str, int, float, bool)
 PAIRS = Dict[str, str]
 DICTS = List[PAIRS]
 DICDIC = Dict[str, PAIRS]
-XMLNS_SEP = '_'
-PASS_NAMES = False
-STRIP = True
-PASS_NAMES_SEP = '.'
-SEC_KEY = ['tag', 'unit', 'date', 'qtrs']
-FACT_GROUPS = ['gaap', 'dei']
-REF_GROUPS = ['context']
-#SEC_FOLDER = '~/Documents/'
 
 def extract (url):
     ''' download xml page, convert xml to dicts format, convert them to dataframe, denormalize and clean, and save as csv files'''
@@ -48,19 +42,6 @@ def extract (url):
     ref = pd.concat(refs)
     fact = fact.join (ref , on='context').filter(SEC_KEY+['value', 'cik'])
     return fact
-    # pd.concat[list(groups[FACT_GROUPS])]
-    # for g in ['gaap']: # converts values to numeric and clean NAs
-    #     groups[g]['value'] = pd.to_numeric(groups[g]['value'], errors='coerce', downcast='float')
-    #     groups[g] = groups[g].dropna(subset=['value'])
-    
-    # for ref in REF_GROUPS: # denormalize fact dataframes using refs
-    #     for fact in FACT_GROUPS:
-    #         groups[fact] = groups[fact].join(groups[ref], on=ref).filter(SEC_KEY+['value', 'cik'])
-    # return FACT_GROUPS
-    #for g in FACT_GROUPS: # save as csv
-    #    groups[g].to_csv (SEC_FOLDER + xml_name.replace('_html.xml', '').replace('.xml', '')+'_'+g+'.csv', index=False)
-    #print('Everything went successfully. All csv files for gaap and dei and context were saved in', SEC_FOLDER, 'for', xml_name)
-    #return
 
 def extract_flat_dicts_from_sec_xml (xml: bytes) -> DICDIC:
     ''' converts sec xml submission file to list of dictionary that has all components. a.b means namespance a and name b. '''
