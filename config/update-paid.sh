@@ -1,7 +1,7 @@
 #!/bin/bash
 ### update paid-machine through git
 gcloud compute instances start paid
-gcloud compute scp config/exclude ali@paid:~/PROJECTS/Finmint/.git/info/exclude
+gcloud compute scp ~/PROJECTS/Finmint/config/exclude ali@paid:~/PROJECTS/Finmint/.git/info/exclude
 gcloud compute ssh ali@paid << update-paid
 cd ~/PROJECTS/Finmint/
 git fetch

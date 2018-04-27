@@ -3,8 +3,8 @@
 echo "Sync and upgrade control-machine. It includes scheduler, nginx, etc."
 date
 ### copy paid-job and nginx to control
-#gcloud compute scp config/nginx.conf ali@sec:~/PROJECTS/Finmint/config
-gcloud compute scp config/daily-paid-job.sh ali@ops:~/PROJECTS/Finmint/config
+#gcloud compute scp ~/PROJECTS/Finmint/config/nginx.conf ali@sec:~/PROJECTS/Finmint/config
+gcloud compute scp ~/PROJECTS/Finmint/config/daily-paid-job.sh ali@ops:~/PROJECTS/Finmint/config
 
 gcloud compute ssh ali@sec <<update-ops
 #sudo cp config/nginx.conf /etc/nginx/nginx.conf # copy costomized nginx.config
