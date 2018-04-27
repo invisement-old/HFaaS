@@ -26,13 +26,11 @@ def update_sec_from_zips ():
             req.raise_for_status()
             zipfile.ZipFile(io.BytesIO(req.content)).extractall(TEMP) # unzip content to TEMP
             sub = pd.read_csv (TEMP+'sub.txt', sep='\t', encoding=SEC_ENCODING).set_index('adsh')['cik'].astype(str)
-            chunks = pd.read_csv (TEMP+'num.txt', sep='\t', chunksize=1000, encoding=SEC_ENCODING)
-            for num in chunks:
-                num = num.join(sub, on='adsh', how='inner').rename(columns={'ddate': 'date', 'uom': 'unit'})
-                for cik, new in num.groupby('cik'):
-                    update_and_replace(new, cik)
-            archives = archives + [os.path.basename(url)]
-            setting[SEC_ZIP_ARCHIVES] = archives
+            num = pd.read_csv (TEMP+'num.txt', sep='\t', encoding=SEC_ENCODING)
+            num = num.join(sub, on='adsh', how='inner').rename(columns={'ddate': 'date', 'uom': 'unit'})
+            for cik, new in num.groupby('cik'):
+                update_and_replace(new, cik)
+            setting[SEC_ZIP_ARCHIVES] = setting[SEC_ZIP_ARCHIVES] + [os.path.basename(url)]
             with open(DATA_SETTING, 'w+') as jfile:
                 json.dump(setting, jfile)
         except Exception as e:
@@ -85,14 +83,14 @@ def find_new_xml_submissions (submissions):
     return submissions
 
 def update_and_replace (new, cik):
-    file_name = SEC_FOLDER+cik+'.csv.gz'
+    file_name = SEC_FOLDER+cik+'.csv'
     new = new.filter(SEC_KEY+['value'])
     try:
-        old = pd.read_csv(file_name, compression='gzip')
+        old = pd.read_csv(file_name)
     except Exception:
         old = None
         print('Warning, we could not find file ', file_name, ' so we created a new file.')
     new = pd.concat([new, old]).drop_duplicates(SEC_KEY)
-    new.to_csv(file_name, index=False, compression='gzip')
+    new.to_csv(file_name, index=False)
     return
 

@@ -10,7 +10,7 @@ cd ~/PROJECTS/Finmint
 source .env/bin/activate
 # python -c "import company; company.test();"
 touch .temp/stopwatch # record time of start by creating a temp file
-python -c "import app.extract_sec as xt; xt.update_sec_from_xml(); xt.update_sec_from_zips()" # update data sets
+python -c "import app.extract_sec as xt; xt.update_sec_from_zips(); xt.update_sec_from_xml()" # update data sets
 deactivate
 find sec.finmint-data/* -newer .temp/stopwatch | gsutil -m cp -r -c -Z -I gs://sec.finmint.us/ #copy to google store
 date
