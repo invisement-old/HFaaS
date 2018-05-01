@@ -100,9 +100,9 @@ sec = pd.read_csv ("data/test.csv")
 q, y = make_quarterly_yearly_dataset (sec)
 ### Making Statements
 
+import app.update as up
 
-TO DO:
-- BUG: paid daily job not working fine. - keep log - delete weekly
 
+up.update_finset()
 
 

@@ -3,6 +3,11 @@ Hedge Fund As A Service
 - We trust in machine
 - Machine Learning for Finance
 
+## Future feature
+- reading from html submissions instead of xml for sec submissions
+- running through all years for complete dataset
+
+
 ## Architecture
 It deploys these components
 - dev: my local machine

@@ -6,3 +6,7 @@
 ## Update paid machine
 - ~/PROJECTS/Finmint/config/update-paid.sh
 
+## Create or Update finset from sec files
+    cik_file=$"data/123.csv"
+    python -c 'import app.update as up; up.update_finset("$cik_file")'
+    
