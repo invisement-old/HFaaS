@@ -16,7 +16,7 @@ def update_finset(cik_file):
     sec = pd.read_csv(cik_file)
     q, y = st.make_quarterly_yearly_finset (sec)
     cik = os.path.basename(cik_file).split('.')[0]
-    ticker = cik2ticker[cik]
+    ticker = cik2ticker.get(cik, cik)
     q_name = str(ticker)+"-"+"Q.csv"
     replace_old(q_name, q.drop('qtrs', axis=1), folder=FINSET_FOLDER, key=['period', 'tag', 'unit'])
     y_name = str(ticker)+"-"+"Y.csv"
