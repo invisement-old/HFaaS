@@ -34,7 +34,7 @@ xt.update_sec_from_xml()
 
 ########
 g = sx.extract(url)
-mport app.stmt_templates as tmpl
+import app.stmt_templates as tmpl
 tmpl.create_stmt_templates()
 
 
@@ -90,4 +90,19 @@ a = [x.result() for x in res]
 t1 = time.time()
 t1-t0
 
-###
+
+cik = 1101026
+url = 'https://www.sec.gov/Archives/edgar/data/1684508/000168450818000005/0001684508-18-000005-index.html'
+
+
+sec = pd.read_csv ("data/test.csv")
+
+q, y = make_quarterly_yearly_dataset (sec)
+### Making Statements
+
+
+TO DO:
+- BUG: paid daily job not working fine. - keep log - delete weekly
+
+
+

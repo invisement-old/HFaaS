@@ -8,6 +8,9 @@ git fetch
 git reset --hard origin/master
 git merge master/origin
 git diff --name-only
+source .env/bin/activate
+cat config/python-requirements.txt | xargs -n 1 pip install
+deactivate
 update-paid
 ## turn off the paid machine
 gcloud compute instances stop paid

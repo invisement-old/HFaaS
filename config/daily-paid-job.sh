@@ -2,7 +2,7 @@
 echo start paid machine from ops, run daily job to update sec files, copy them to gs://sec.finmint.us
 cd ~/PROJECTS/Finmint
 gcloud compute instances start paid
-gcloud compute ssh ali@paid --quiet &> .log/daily-paid-job.log <<daily-paid-job
+gcloud compute ssh ali@paid --quiet &>> .log/daily-paid-job.log <<daily-paid-job
 echo "Daily paid job for sec update started!"
 date
 ## set up env

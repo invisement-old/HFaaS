@@ -19,6 +19,7 @@ def update_sec_from_zips ():
         raise Exception("create data setting file")
     archives = setting.get(SEC_ZIP_ARCHIVES, [])
     new_urls = find_new_zip_secs(archives)
+    print("these are new zip sec files uploaded: ", new_urls)
     for url in sorted(new_urls):
         try: # extract new sec and update sec
             print ("Extracting", url, "and updating sec.")
@@ -58,7 +59,7 @@ def update_sec_from_xml ():
     #urls.index = urls.index.astype(str).str.zfill(10)
     for cik, url in urls.iteritems():
         try:
-            #print("extracting: ", url)
+            print("extracting: ", url)
             new = sx.extract (url)
             new['value'] = pd.to_numeric(new['value'], errors='coerce', downcast='float')
             new = new.dropna(subset=['value'])
@@ -92,5 +93,6 @@ def update_and_replace (new, cik):
         print('Warning, we could not find file ', file_name, ' so we created a new file.')
     new = pd.concat([new, old]).drop_duplicates(SEC_KEY)
     new.to_csv(file_name, index=False)
+    print ("Success! We updates the file for ", cik)
     return
 

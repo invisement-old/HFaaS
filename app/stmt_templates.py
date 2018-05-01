@@ -1,10 +1,9 @@
 import os
 import pandas as pd
+from app import *
 
-TAXONOMY_EXCEL = 'data/Taxonomy_2017Amended.xlsx'
-SEC_FILE = '.temp/num.txt'
-OUTPUT_STMT_TEMPLATE = 'data/stmt_template.csv'
-ARCHIVE_STMT_TEMPLATE = 'archive-data/stmt_template.csv'
+tmpl = pd.read_csv (STMT_TEMPLATE).set_index('tag').filter(['stmt', 'tag', 'item', 'line'])
+
 #LINK_TO_DOWNLOAD_EXCEL_FILE = http://www.fasb.org/jsp/FASB/Page/SectionPage&cid=1176168807223
 systemid_stmt = {
     'stm-soi-pre': 'IS',
@@ -35,10 +34,57 @@ def create_stmt_templates ():
     sec = taxonomy.join(sec, on='tag', how='right').sort_values(['stmt', 'line'])
     sec = sec.groupby('stmt').apply(lambda x: x.nlargest(stmt_cutoff.get(x.name,0), 'adsh')) # cut off for each stmt by stmt_cutoff
     sec = sec.sort_values(['stmt', 'line']).reset_index(drop=True)
-    os.rename(OUTPUT_STMT_TEMPLATE, ARCHIVE_STMT_TEMPLATE) # move old to archive
-    pre.to_csv (OUTPUT_STMT_TEMPLATE, index=False) # save new template
-    #print('DONE! input taxonomy file: ', TAXONOMY_EXCEL, ' and sec pre.txt file: ', SEC_FILE, 'was used and output file saved in ', OUTPUT_STMT_TEMPLATE, ' and old file archived in ', ARCHIVE_STMT_TEMPLATE)
+    os.rename(STMT_TEMPLATE, ARCHIVE_STMT_TEMPLATE) # move old to archive
+    pre.to_csv (STMT_TEMPLATE, index=False) # save new template
+    #print('DONE! input taxonomy file: ', TAXONOMY_EXCEL, ' and sec pre.txt file: ', SEC_FILE, 'was used and output file saved in ', STMT_TEMPLATE, ' and old file archived in ', ARCHIVE_STMT_TEMPLATE)
     return
 
-#pre.query('stmt=="CF"')[['tag', 'depth', 'adsh']]
+def make_stmts (finset, tmpl)
+    stmts = finset.join(tmpl, on='tag', how='inner').dropna(subset=['item'])
+    stmts = stmts.drop_duplicates(['period', 'item'], keep='last')
+    stmts = stmts.set_index(['stmt', 'line', 'item', 'period'])['value']
+    stmts = stmts.unstack('period')
+    stmts.to_csv(STMT_FOLDER+finset)
+    return stmts
+
+
+def make_quarterly_yearly_finset (sec, TAG='tag'):
+    sec['period'] = pd.to_datetime(sec['date'].astype(str), errors='coerce').dt.to_period('Q')
+    sec = sec.sort_values([TAG, 'date'], ascending=False)
+    sec = sec.drop_duplicates([TAG, 'period', 'qtrs', 'unit'])
+    sec = sec.set_index ('period')
+    sec['qtrs']= sec['qtrs'].fillna(0)
+    Q_zero = sec.query('qtrs == 0').reset_index().drop_duplicates([TAG, 'period'])
+    Y_zero = Q_zero.query('period.dt.quarter == 4')
+    Q_one = sec.groupby([TAG, 'unit'], group_keys=False).apply(all_quarters)
+    Y_one = Q_one.groupby([TAG, 'unit']).apply(lambda q: q.resample('Y').agg({'date':'last', 'qtrs':lambda x: pd.Series.sum(x,min_count=4), 'value':lambda x: pd.Series.sum(x,min_count=4)})).reset_index()
+    Q_one = Q_one.reset_index()
+    Q = pd.concat([Q_zero, Q_one])
+    Y = pd.concat([Y_zero, Y_one])
+    return Q, Y
+
+def all_quarters (group):
+    #print(group.shape)
+    #print(group)
+    quarterly = group.query('qtrs==1')
+    quarterly = quarterly.resample('Q').asfreq()
+    yearly = group.query('qtrs>1').sort_index()
+    missings = quarterly[quarterly['value'].isna()]
+    #indices = yearly.index.values.searchsorted(missings.index.values)
+    #missings = missings.assign(date = yearly.iloc[indices]['date'])
+    for period, row in missings.iterrows():
+        try:
+            total = yearly.iloc[yearly.index.searchsorted(period)]
+            previous_qtrs = [idx for idx in quarterly.index if idx != period and (total.name-total.qtrs) < idx <= total.name]
+            previous_values = quarterly.loc[previous_qtrs, 'value'].sum(skipna = False)
+            row.value = total.value - previous_values
+            row.unit = total.unit
+            row.qtrs = 1
+            row.date = yearly['date'].get(period)
+            row[TAG] = total[TAG]
+            quarterly.loc[period] = row
+        except Exception:
+            pass
+    return quarterly
+
 
