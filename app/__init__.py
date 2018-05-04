@@ -31,7 +31,9 @@ STMT_FOLDER = 'data/stmt/'
 
 ## For update module
 
-FINSET_FOLDER = "data/finset/"
+#FINSET_FOLDER = "data/finset/"
+QUARTERLY_FOLDER = "data/q/"
+YEARLY_FOLDER = "data/y/"
 CIK2TICKER = "data/basic/company.csv"
 
 

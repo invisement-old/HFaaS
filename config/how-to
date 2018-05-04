@@ -3,8 +3,8 @@
 ## Update ops machine
 - ~/PROJECTS/Finmint/config/update-ops.sh
 
-## Update paid machine
-- ~/PROJECTS/Finmint/config/update-paid.sh
+## Update deploy machine
+- ~/PROJECTS/Finmint/config/update-deploy.sh
 
 ## Create or Update finset from sec files
     cik_file=$"data/123.csv"

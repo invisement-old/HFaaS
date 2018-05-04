@@ -2,7 +2,7 @@ import os
 import pandas as pd
 from app import *
 
-def make_quarterly_yearly_finset (sec, TAG='tag'):
+def make_quarterly_yearly_sec (sec, TAG='tag'):
     sec['period'] = pd.to_datetime(sec['date'].astype(str), errors='coerce').dt.to_period('Q')
     sec = sec.sort_values([TAG, 'date'], ascending=False)
     sec = sec.drop_duplicates([TAG, 'period', 'qtrs', 'unit'])

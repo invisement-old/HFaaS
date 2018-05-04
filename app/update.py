@@ -7,20 +7,19 @@ from app import *
 import pandas as pd
 import os
 
-cik2ticker = pd.read_csv(CIK2TICKER, dtype=str).set_index('CIK')['Symbol']
-tmpl = pd.read_csv (STMT_TEMPLATE).set_index('tag').filter(['stmt', 'tag', 'item', 'line'])
+cik2ticker = pd.read_csv(CIK2TICKER, dtype=str).drop_duplicates('CIK').set_index('CIK')['Symbol']
+tmpl = pd.read_csv (STMT_TEMPLATE).set_index('tag').filter(['tag', 'item', 'loc'])
 
-
-def update_finset(cik_file):
-    ''' from sec file in cik_file creates quartely and yealry finsets and saves to FINSET_FOLDER'''
-    sec = pd.read_csv(cik_file)
-    q, y = st.make_quarterly_yearly_finset (sec)
+def update_sec(cik_file, since=20100101):
+    ''' from sec file in cik_file creates quartely and yealry secs and save'''
+    sec = pd.read_csv(cik_file).query('date > @since')
+    q, y = st.make_quarterly_yearly_sec (sec)
     cik = os.path.basename(cik_file).split('.')[0]
     ticker = cik2ticker.get(cik, cik)
-    q_name = str(ticker)+"-"+"Q.csv"
-    replace_old(q_name, q.drop('qtrs', axis=1), folder=FINSET_FOLDER, key=['period', 'tag', 'unit'])
-    y_name = str(ticker)+"-"+"Y.csv"
-    replace_old(y_name, y.drop('qtrs', axis=1), folder=FINSET_FOLDER, key=['period', 'tag', 'unit'])
+    q_name = str(ticker)+".csv"
+    replace_old(q_name, q.drop('qtrs', axis=1), folder=QUARTERLY_FOLDER, key=['period', 'tag', 'unit'])
+    y_name = str(ticker)+".csv"
+    replace_old(y_name, y.drop('qtrs', axis=1), folder=YEARLY_FOLDER, key=['period', 'tag', 'unit'])
 
 def replace_old (old_name, new, folder, key, keep='first'):
     ''' finds old dataframe (if not creates and empty old), updates it with new dataframe, gets rid of duplicates and saves back.'''
@@ -34,6 +33,14 @@ def replace_old (old_name, new, folder, key, keep='first'):
     print ("Success! file ", old_name, " updated successfully!")
 
 
+def make_stmt (fin_path, tmpl): ## fins comes from q or y
+    stmts = pd.read_csv(fin_path).join(tmpl, on='tag', how='inner')
+    stmts = stmts.dropna(subset=['item']).drop_duplicates(['period', 'item'], keep='last')
+    stmts = stmts.set_index(['loc', 'item', 'period'])['value']
+    stmts = stmts.unstack('period')
+    path, name = os.path.split(fins)
+    stmts.to_csv(path+'-stmt/'+name)
+    return
 
 
 
