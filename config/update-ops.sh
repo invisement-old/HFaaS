@@ -1,5 +1,5 @@
 #!/bin/bash
-# execude without sudo please to avoid $HOME change
+# execute without sudo to avoid $HOME change
 echo "Sync and upgrade control-machine. It includes scheduler, nginx, etc."
 date
 ### copy deploy-job and nginx to control

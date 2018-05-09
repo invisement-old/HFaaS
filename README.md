@@ -5,7 +5,8 @@ Hedge Fund As A Service
 
 ## Future feature
 - reading from html submissions instead of xml for sec submissions
-- running through all years for complete dataset
+- running through all years for complete dataset (xmls by cik)
+- 
 
 
 ## Architecture

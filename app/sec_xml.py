@@ -22,25 +22,14 @@ PAIRS = Dict[str, str]
 DICTS = List[PAIRS]
 DICDIC = Dict[str, PAIRS]
 
-def extract (url):
-    ''' download xml page, convert xml to dicts format, convert them to dataframe, denormalize and clean, and save as csv files'''
-    try: # download xml page containing SEC submission data
-        table = pd.read_html(url, header=0)[1] # read table of contents
-        xml_name = table['Document'][table['Description'].str.contains('instance|.ins', case=False) | table['Type'].str.contains('.ins', case=False)].iloc[0] # select file name for xbrl instance
-        xml_url = url[0:url.rfind('/')+1] + xml_name # add name to url base
-        response = requests.get(xml_url) # get the xml page text
-        response.raise_for_status() # raise if error
-        xml_page = response.content
-    except Exception as e:
-        print('Error! could not fetch xbrl instance xml from', url)
-        print(e)
-        return
-    groups = extract_flat_dicts_from_sec_xml (xml_page) # extract key-value pairs from xml
+def extract (sec_xml_page):
+    ''' convert xml_page (in byte) to dicts format, convert them to dataframe, denormalize and clean'''
+    groups = extract_flat_dicts_from_sec_xml (sec_xml_page) # extract key-value pairs from xml
     facts = [df for g, df in groups.items() if g in FACT_GROUPS]
     refs = [df for g, df in groups.items() if g in REF_GROUPS]
     fact = pd.concat(facts)
     ref = pd.concat(refs)
-    fact = fact.join (ref , on='context').filter(SEC_KEY+['value', 'cik'])
+    fact = fact.join (ref , on='context').filter(SEC_COLS)
     return fact
 
 def extract_flat_dicts_from_sec_xml (xml: bytes) -> DICDIC:
@@ -64,7 +53,10 @@ def facts_to_df (facts: DICTS) -> pd.DataFrame:
                 dic['tag'] = s[1]
                 dic['value'] = dic[key]
                 del (dic[key])
-    return pd.DataFrame(facts).rename(columns=str.lower).rename(columns={'unitref': 'unit', 'contextref': 'context'})
+    df = pd.DataFrame(facts).rename(columns=str.lower).rename(columns={'unitref': 'unit', 'contextref': 'context'})
+    if 'unit' in df.columns:
+        df['unit'] = df['unit'].str.replace('.*[0-9_ ]+', '')
+    return df
 
 def xml_to_dict (xml, dic: PAIRS) -> PAIRS:
     ''' Recursively finds the most inner key:value pairs and collects them in a dictionary '''
@@ -88,6 +80,6 @@ def refs_to_df (refs: DICTS) -> pd.DataFrame:
         context[col] = pd.to_datetime(context[col], errors='coerce')
     context['qtrs'] = (context['enddate']-context['startdate'])/np.timedelta64(3, 'M') # calculate durations (in quarter) 
     context['qtrs'] = context['qtrs'].round() # round it up
-    context['date'] = pd.to_datetime(context['enddate'].fillna(context['instant']), errors='coerce') # col date is either enddate or instant, used to_datetime to hack NAs
+    context['date'] = pd.to_datetime(context['enddate'].fillna(context['instant']), errors='coerce').dt.strftime("%Y%m%d") # col date is either enddate or instant, used to_datetime to hack NAs
     return context[['cik', 'date', 'qtrs']]
 

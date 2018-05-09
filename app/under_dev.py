@@ -36,12 +36,3 @@ def create_stmt_templates ():
     pre.to_csv (STMT_TEMPLATE, index=False) # save new template
     #print('DONE! input taxonomy file: ', TAXONOMY_EXCEL, ' and sec pre.txt file: ', SEC_FILE, 'was used and output file saved in ', STMT_TEMPLATE, ' and old file archived in ', ARCHIVE_STMT_TEMPLATE)
     return
-
-def make_stmts (finset, tmpl):
-    stmts = finset.join(tmpl, on='tag', how='inner').dropna(subset=['item'])
-    stmts = stmts.drop_duplicates(['period', 'item'], keep='last')
-    stmts = stmts.set_index(['stmt', 'line', 'item', 'period'])['value']
-    stmts = stmts.unstack('period')
-    stmts.to_csv(STMT_FOLDER+finset)
-    return stmts
-

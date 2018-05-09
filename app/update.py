@@ -1,46 +1,48 @@
-''' The module is responsible mostly for updating content on server by calling other underlying 
-modules. It is the interface between module functionality and outside world (data sources and data storages)
-'''
+''' manages updates of all extracts and transformations by calling gate and all other modules '''
 
-import app.stmt as st
 from app import *
-import pandas as pd
+import app.gate as gate
 import os
-
-cik2ticker = pd.read_csv(CIK2TICKER, dtype=str).drop_duplicates('CIK').set_index('CIK')['Symbol']
-tmpl = pd.read_csv (STMT_TEMPLATE).set_index('tag').filter(['tag', 'item', 'loc'])
-
-def update_sec(cik_file, since=20100101):
-    ''' from sec file in cik_file creates quartely and yealry secs and save'''
-    sec = pd.read_csv(cik_file).query('date > @since')
-    q, y = st.make_quarterly_yearly_sec (sec)
-    cik = os.path.basename(cik_file).split('.')[0]
-    ticker = cik2ticker.get(cik, cik)
-    q_name = str(ticker)+".csv"
-    replace_old(q_name, q.drop('qtrs', axis=1), folder=QUARTERLY_FOLDER, key=['period', 'tag', 'unit'])
-    y_name = str(ticker)+".csv"
-    replace_old(y_name, y.drop('qtrs', axis=1), folder=YEARLY_FOLDER, key=['period', 'tag', 'unit'])
-
-def replace_old (old_name, new, folder, key, keep='first'):
-    ''' finds old dataframe (if not creates and empty old), updates it with new dataframe, gets rid of duplicates and saves back.'''
-    try:
-        old = pd.read_csv(folder+old_name)
-    except Exception:
-        old = None
-        print("could not file old file, created a new file for ", old_name)
-    new = pd.concat([new, old]).drop_duplicates(key, keep=keep)
-    new.to_csv (folder+old_name, index=False)
-    print ("Success! file ", old_name, " updated successfully!")
+import pandas as pd
+import requests
+import app.sec_xml as sx
 
 
-def make_stmt (fin_path, tmpl): ## fins comes from q or y
-    stmts = pd.read_csv(fin_path).join(tmpl, on='tag', how='inner')
-    stmts = stmts.dropna(subset=['item']).drop_duplicates(['period', 'item'], keep='last')
-    stmts = stmts.set_index(['loc', 'item', 'period'])['value']
-    stmts = stmts.unstack('period')
-    path, name = os.path.split(fins)
-    stmts.to_csv(path+'-stmt/'+name)
+def secs_from_zips ():
+    archived_sec_zips = gate.read_archived_sec_zips()
+    all_sec_zip_urls = gate.scrape_sec_zip_urls()
+    new_sec_zip_urls = [url for url in all_sec_zip_urls if os.path.basename(url) not in archived_sec_zips]
+    for sec_zip_url in sorted(new_sec_zip_urls):
+        secs = gate.read_zip_sec (sec_zip_url)
+        for cik, sec in secs.groupby('cik'):
+            gate.update_df (sec, SEC_FOLDER+str(cik)+'.csv', key=SEC_KEY, keep='last')
+        new_sec_zip_basenames = [os.path.basename(sec_zip_url)]
+        gate.archive_sec_zip(new_sec_zip_basenames)
     return
 
-
+def secs_from_xmls ():
+    submissions = gate.scrape_xml_submissions_page (NEW_SUBMISSIONS) # scrape it
+    old_submissions = gate.scrape_xml_submissions_page (OLD_SUBMISSIONS)
+    new_submissions = submissions[~submissions['file'].isin(old_submissions['file'])]
+    new_submissions = new_submissions.set_index('cik')['file'] # set index
+    for cik, url in new_submissions.iteritems(): # find xml file from index.json file from url, 
+        try:
+            response = requests.get(url)
+            response.raise_for_status()
+            dic = response.json()['directory']['item']
+            names = pd.DataFrame(dic)['name'] # file names in submission directory
+            xml_file = names[names.str.contains('[0-9]{4}(_htm)*(l)*\.xml')].iloc[0] ## regex to find xml file from names
+            xml_url = os.path.dirname(url) +'/' + xml_file 
+            response = requests.get(xml_url)
+            response.raise_for_status()
+            xml_page = response.content
+            sec = sx.extract(xml_page)
+            sec['value'] = pd.to_numeric(sec['value'], errors='coerce', downcast='float')
+            sec = sec.dropna(subset=['value'])
+            sec['qtrs'].fillna(0, inplace=True)
+            gate.update_df (sec, SEC_FOLDER+str(cik)+'.csv', key=SEC_KEY, keep='last')
+        except Exception as e:
+            print ('ERROR! could not extract xml from ', url, e)
+    with open(OLD_SUBMISSIONS, 'wb') as f:
+        f.write(submission_index_page)
 
