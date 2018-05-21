@@ -3,11 +3,20 @@ Hedge Fund As A Service
 - We trust in machine
 - Machine Learning for Finance
 
-## Future feature
+## Future features
 - reading from html submissions instead of xml for sec submissions
 - running through all years for complete dataset (xmls by cik)
-- 
 
+## Process
+```mermaid
+graph LR
+input[sec, price, raw] -- extract and update --> periodic[n, d, q, y]
+periodic -- filter and reshape --> stmt[q-stmt, y-stmt]
+stmt -- calc --> ratios[q-ratios, y-ratios]
+periodic --add to--> db
+ratios --add to--> db
+
+```
 
 ## Architecture
 It deploys these components

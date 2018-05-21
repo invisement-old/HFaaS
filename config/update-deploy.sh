@@ -1,9 +1,9 @@
 #!/bin/bash
 ### update deploy-machine through git
 gcloud compute instances start deploy
-gcloud compute scp ~/PROJECTS/Finmint/config/exclude ali@deploy:~/PROJECTS/Finmint/.git/info/exclude
+gcloud compute scp ~/PROJECTS/inVisement/config/exclude ali@deploy:~/PROJECTS/inVisement/.git/info/exclude
 gcloud compute ssh ali@deploy << update-deploy
-cd ~/PROJECTS/Finmint/
+cd ~/PROJECTS/inVisement/
 git fetch
 git reset --hard origin/master
 git merge master/origin

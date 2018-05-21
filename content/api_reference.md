@@ -1,44 +1,105 @@
 ---
+
 weight: 10
-title: API Reference
+
 ---
 
-# SEC Data
 
-## Basic Information of Companies
 
-> URL: [www.finmint.us/company.csv](/data/sec/company.csv)
+# Datasets
 
-Company.csv file consists basic information about over 14000 companies. Updates monthly, first Sunday.
+>### Explore datasets through our viewer:
+<a target="_blank" href="https://data.invisement.com?q/AAPL.csv"> <img src="/images/viewer.jpg" width="100%"> </a>
+**You can search, filter, select, and save data.**
 
-### Columns:
-- `name`: Company Name
-- `symbol`: Ticker Symbol
-- `address`: HQ Address
-- `cik`: CIK assigned by SEC
-- `sik`: SIK number assigned by SEC
-- `irs`: Tax number assigned by IRS
-- `sector`: Company's Sector
-- `industry`: Company's Industry
-- `ceo`: Latest CEO of company
+- **basic/company.csv** ([view](https://data.invisement.com?basic/company.csv) or [download](https://data.invisement.com/basic/company.csv))
+    - Includes a basic information about companies. 
+    - Columns: [`ticker`, `cik`, `irs`, `name`, `sic`, `state`]
+- **sec/CIK.csv**
+    - Consolidated financial data submitted by company in 10-K and 10-Q forms. 
+    - columns: [`tag`, `date`, `qtrs`, `value`, `unit`]
+- **q/TICKER.csv**
+    - Quarterly data about core financial indicators for each company. 
+    - columns: [`tag`, `period`, `value`, `unit`, `date`]
+- **y/TICKER.csv**
+    - Yearly data about core financial indicators for each company by. 
+    - columns: [`tag`, `period`, `value`, `unit`, `date`]
+- **q-stmt/TICKER.csv**
+    - Quarterly panel data of the financial statements for each company. 
+    - rows: `tag`, columns: `period`
+- **y-stmt/TICKER.csv**
+    - Yearly panel data of the financial statements for each company. 
+    - rows: `tag`, columns: `period`
 
-## 10K-10Q Financial Statements
+<aside>
+Please replace `TICKER` with company's ticker symbol and CIK with its CIK. For instance, Apple's TICKER is AAPL and its CIK is 320193.
+</aside>
 
-> URL: www.finmint.us/data/sec/SYMBOL.csv  
-SYMBOL is the `ticker symbol` of the company, such as `AAPL` for Apple Inc. and `MSFT` for Microsoft Corporation.
+# Fetch Data Files
 
-Financial data is extracted from reports---especially 10K and 10Q forms---that companies submit to Security Exchange Commission. The original data is often difficult to read or navigate. We offer those data, consolidated and homogenized, in a single `.csv` file per company.
+>**Example file: <input style="color: blue" type="text" value="q/AAPL.csv" onchange="change_tag(this)"> (you can change it)**
 
-### Columns:
-- `cik` is the official number assgined to each company and often is used by official documents to identify the company.
-- `stmt` is the financial statement that this item is extracted. (BS = Balance Sheet, IS = Income Statement, CF = Cash Flow, EQ = Equity, CI = Comprehensive Income, UN = Unclassifiable Statement).
-- `item` is the item tag that is used by company such as `Net Income` or `Accounts Payable`.
-- `date` is the item date as `integer` type in `yyyymmdd` format: 20081231 is 12/31/2008.
-- `qtrs` shows how many quarters the sumber covers. 0 is for point in time (often for Balance Sheet items), 1 is for one quarter coverage, 4 is for one year coverage, and so on.
-- `uom` is unit of measurement.
-- `value` is the (often) numeric value of the item at given time and qtrs.
-- `fiscal` is the fiscal quarter according to the company's fiscal year.
-- `report` is the number of attached report that item.
-### Row Key:
-- Each row is unique for <`stmt`, `item`, `date`, `qtrs`>
+>- `base`    = https://data.invisement.com
+- `file`    = q/AAPL.csv
+- `url`     = `base`/`file`
+- `viewer`  = `base`?`file`
+
+```md
+Embed any of our data `file` in your html page by pasting
+`<iframe src="https://data.invisement.com?q/AAPL.csv" width="100%"></iframe>`
+in any place of your page. 
+Don't forget to change the `src` to `base`?`file`.
+```
+
+```js
+//`fetch` the file's url and then parse it (we recommend `Papa.parse`)
+fetch(url)
+    .then(response => response.text())
+    .then(Papa.parse)
+    .then(response => response.data) ## output is js array of arrays [['col1', 'col2', ...]['1.1', '1.2', ...], ['2.1', '2.2', ...] ...]
+    .then(whatever you want to do with parsed data);
+// do not forget to import parser either 
+// import * as Papa from papaparse or
+// <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/4.1.2/papaparse.min.js"></script>
+```
+
+```python
+# it's easy, use pandas library
+import pandas as pd
+data = pd.read_csv(url)
+```
+
+```r
+# very intuitive
+data = read.csv(url(data_url))
+```
+
+```sheets
+Use =importData(`url`) formula. For instance enter 
+`=importData(https://data.invisement.com/q/AAPL.csv)` 
+in any cell.
+```
+
+```excel
+From menu select `Data` then click `from Text/CSV` 
+and in `File name` enter `url`: `https://data.invisement.com/q/AAPL.csv`
+```
+
+
+<img src="/images/graphs.jpg">
+
+ **Download any data file through its https `url`:**  
+ https://data.invisement.com/q/AAPL.csv
+
+**View any data file through our `viewer`:**  
+https://data.invisement.com?q/AAPL.csv
+
+
+<script>
+    change_tag = function (elem) {
+        old = new RegExp(elem.defaultValue, "g")
+        document.body.innerHTML = document.body.innerHTML.replace(old, elem.value);
+        elem.defaultValue = elem.value
+    }
+</script>
 

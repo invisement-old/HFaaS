@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
+        <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/4.1.2/papaparse.min.js"></script>
+        <script src="https://cdn.fancygrid.com/fancy.min.js"></script>
+    </head>
+<body>
+
+<h1>finMint</h1>
+
+<table id="example" class="display" width="100%"></table>
+
+<script>
+
+
+    var dPage = "https://data.finmint.us/".concat(location.search.slice(1))
+
+    Papa.parse(dPage, {
+        download: true,
+        //header: true,
+        complete: function(results) {
+            //data = results.data
+            //var cols = data.shift()
+            //var a = []
+            //for (i in cols) {
+            //    a.push({'title': cols[i]})
+            //}
+            $('#example').pivotUI(results.data, {
+
+            });
+        }
+    });
+
+</script>
+
+</body>
+</html>
+

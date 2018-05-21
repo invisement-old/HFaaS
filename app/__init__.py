@@ -48,7 +48,7 @@ FILL_MISSING_SINCE = 19590101
 ### User can change the global variables (setting) in config/app_config.py file
 import sys
 sys.path.append('config/')
-from app_config import *
+from appConfig import *
 
 
 

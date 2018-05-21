@@ -8,7 +8,6 @@ import zipfile
 import io, os
 from lxml import html
 import json
-from lxml import html
 
 
 def read_archived_sec_zips ():

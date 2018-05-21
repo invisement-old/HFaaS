@@ -7,7 +7,6 @@ import pandas as pd
 import requests
 import app.sec_xml as sx
 
-
 def secs_from_zips ():
     archived_sec_zips = gate.read_archived_sec_zips()
     all_sec_zip_urls = gate.scrape_sec_zip_urls()

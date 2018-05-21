@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/4.1.2/papaparse.min.js"></script>
+
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/ju-1.12.1/jq-3.2.1/dt-1.10.16/b-1.5.1/b-colvis-1.5.1/b-html5-1.5.1/b-print-1.5.1/cr-1.4.1/fc-3.2.4/kt-2.3.2/rr-1.2.3/sc-1.4.4/sl-1.2.5/datatables.min.css"/>
+ 
+        <script type="text/javascript" src="https://cdn.datatables.net/v/ju-1.12.1/jq-3.2.1/dt-1.10.16/b-1.5.1/b-colvis-1.5.1/b-html5-1.5.1/b-print-1.5.1/cr-1.4.1/fc-3.2.4/kt-2.3.2/rr-1.2.3/sc-1.4.4/sl-1.2.5/datatables.min.js"></script>
+
+
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <script>
+          (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-9520974030643487",
+            enable_page_level_ads: true
+          });
+        </script>
+    </head>
+<body>
+
+<img src="https://invisement.com/images/logo.png" width="100" align="left">
+<label style="display: table; margin: auto; font: larger bold; color: red;">Fetch csv: <input type="text" id="dPage-input"></label>
+<div id="data-table-frame"></div>
+
+<script>
+    $(document).ready(function(){
+        $('#dPage-input').on('change', function(){
+            var dPage = "https://data.invisement.com/".concat($(this).val())
+            fetch(dPage)
+                .then(response => response.text())
+                .then(refreshDT);
+        });
+        $('#dPage-input').val(location.search.slice(1)).change()
+    });
+    refreshDT = function (results) {
+        $('#data-table-frame').html('<table id="data-table" class="display compact cell-border" width="100%"></table>');
+        var data = Papa.parse(results, {skipEmptyLines: true}).data
+        var firstrow = data.shift()
+        var cols = []
+        for (i in firstrow) {
+            cols.push({'title': firstrow[i]})
+        };
+        $('#data-table').dataTable({
+            data: data,
+            columns: cols,
+            buttons: ['csv', 'print', 'colvis'],
+            dom: 'Blftip',
+            //responsive: false,
+            aaSorting: [],
+            colReorder: true,
+            //fixedColumns: true,
+            fixedHeader: true,
+            scrollX: true,
+            //scrollY: true,
+            //autoWidth: false,
+            keys: true,
+            rowReorder: true,
+            select:true,
+
+        });
+    };
+</script>
+
+</body>
+</html>
+

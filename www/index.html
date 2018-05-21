@@ -1,0 +1,218 @@
+<!doctype html>
+<html>
+<head>
+	<meta name="generator" content="Hugo 0.38" />
+    <meta charset="utf-8">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>inVisement</title>
+    <link href='/slate/stylesheets/monokai.css' rel="stylesheet" media="screen" />
+<link href='/slate/stylesheets/screen.css' rel="stylesheet" media="screen" />
+<link href='/slate/stylesheets/print.css' rel="stylesheet" media="print" />
+
+    
+<script src='/slate/javascripts/all.js'></script>
+
+    
+</head>
+<body class="index" data-languages="[ &#34;md&#34; ,  &#34;js&#34; ,  &#34;python&#34; ,  &#34;r&#34; ,  &#34;sheets&#34; ,  &#34;excel&#34; ]">
+    <a href="#" id="nav-button">
+        <span>
+        NAV
+        <img src='/slate/images/navbar.png'/>
+      </span>
+    </a>
+    <div class="tocify-wrapper">
+        
+         <img src='/images/logo.png' />
+        
+        <div class="lang-selector">
+            
+            <a href="#" data-language-name="md">HTML</a>
+            
+            <a href="#" data-language-name="js">JS</a>
+            
+            <a href="#" data-language-name="python">Python</a>
+            
+            <a href="#" data-language-name="r">R</a>
+            
+            <a href="#" data-language-name="sheets">Google Sheets</a>
+            
+            <a href="#" data-language-name="excel">Excel</a>
+            
+        </div>
+         
+        
+        <div class="search">
+            <input type="text" class="search" id="input-search" placeholder='Search'>
+        </div>
+        <ul class="search-results"></ul>
+        
+        <div id="toc">
+        </div>
+         
+        
+        
+    </div>
+    <div class="page-wrapper">
+        <div class="dark-box"></div>
+        <div class="content">
+            
+    
+        <p><img src="/images/corp-banner.jpg" width="100%">
+<strong>inVisement is a pioneer firm in Hedge Fund As A Service (HFaaS) model.</strong></p>
+
+    
+        
+
+<h1 id="datasets">Datasets</h1>
+
+<blockquote>
+<h3 id="explore-datasets-through-our-viewer">Explore datasets through our viewer:</h3>
+
+<p><a target="_blank" href="https://data.invisement.com?q/AAPL.csv"> <img src="/images/viewer.jpg" width="100%"> </a>
+<strong>You can search, filter, select, and save data.</strong></p>
+</blockquote>
+
+<ul>
+<li><strong>basic/company.csv</strong> (<a href="https://data.invisement.com?basic/company.csv">view</a> or <a href="https://data.invisement.com/basic/company.csv">download</a>)
+
+<ul>
+<li>Includes a basic information about companies.</li>
+<li>Columns: [<code>ticker</code>, <code>cik</code>, <code>irs</code>, <code>name</code>, <code>sic</code>, <code>state</code>]</li>
+</ul></li>
+<li><strong>sec/CIK.csv</strong>
+
+<ul>
+<li>Consolidated financial data submitted by company in 10-K and 10-Q forms.</li>
+<li>columns: [<code>tag</code>, <code>date</code>, <code>qtrs</code>, <code>value</code>, <code>unit</code>]</li>
+</ul></li>
+<li><strong>q/TICKER.csv</strong>
+
+<ul>
+<li>Quarterly data about core financial indicators for each company.</li>
+<li>columns: [<code>tag</code>, <code>period</code>, <code>value</code>, <code>unit</code>, <code>date</code>]</li>
+</ul></li>
+<li><strong>y/TICKER.csv</strong>
+
+<ul>
+<li>Yearly data about core financial indicators for each company by.</li>
+<li>columns: [<code>tag</code>, <code>period</code>, <code>value</code>, <code>unit</code>, <code>date</code>]</li>
+</ul></li>
+<li><strong>q-stmt/TICKER.csv</strong>
+
+<ul>
+<li>Quarterly panel data of the financial statements for each company.</li>
+<li>rows: <code>tag</code>, columns: <code>period</code></li>
+</ul></li>
+<li><strong>y-stmt/TICKER.csv</strong>
+
+<ul>
+<li>Yearly panel data of the financial statements for each company.</li>
+<li>rows: <code>tag</code>, columns: <code>period</code></li>
+</ul></li>
+</ul>
+
+<aside>
+Please replace `TICKER` with company's ticker symbol and CIK with its CIK. For instance, Apple's TICKER is AAPL and its CIK is 320193.
+</aside>
+
+<h1 id="fetch-data-files">Fetch Data Files</h1>
+
+<blockquote>
+<p><strong>Example file: <input style="color: blue" type="text" value="q/AAPL.csv" onchange="change_tag(this)"> (you can change it)</strong></p>
+
+<ul>
+<li><code>base</code>    = <a href="https://data.invisement.com">https://data.invisement.com</a></li>
+<li><code>file</code>    = q/AAPL.csv</li>
+<li><code>url</code>     = <code>base</code>/<code>file</code></li>
+<li><code>viewer</code>  = <code>base</code>?<code>file</code></li>
+</ul>
+</blockquote>
+<div class="highlight"><pre style="background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-md" data-lang="md">Embed any of our data <span style="color:#87ceeb">`file`</span> in your html page by pasting
+<span style="color:#87ceeb">`&lt;iframe src=&#34;https://data.invisement.com?q/AAPL.csv&#34; width=&#34;100%&#34;&gt;&lt;/iframe&gt;`</span>
+in any place of your page. 
+Don&#39;t forget to change the <span style="color:#87ceeb">`src`</span> to <span style="color:#87ceeb">`base`</span>?`file`.</code></pre></div><div class="highlight"><pre style="background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#0f0">//`fetch` the file&#39;s url and then parse it (we recommend `Papa.parse`)
+</span><span style="color:#0f0"></span>fetch(url)
+    .then(response =&gt; response.text())
+    .then(Papa.parse)
+    .then(response =&gt; response.data) ## output is js array <span style="color:#f00">of</span> arrays [[<span style="color:#87ceeb">&#39;col1&#39;</span>, <span style="color:#87ceeb">&#39;col2&#39;</span>, ...][<span style="color:#87ceeb">&#39;1.1&#39;</span>, <span style="color:#87ceeb">&#39;1.2&#39;</span>, ...], [<span style="color:#87ceeb">&#39;2.1&#39;</span>, <span style="color:#87ceeb">&#39;2.2&#39;</span>, ...] ...]
+    .then(whatever you want to <span style="color:#f00">do</span> <span style="color:#f00">with</span> parsed data);
+<span style="color:#0f0">// do not forget to import parser either 
+</span><span style="color:#0f0">// import * as Papa from papaparse or
+</span><span style="color:#0f0">// &lt;script type=&#34;text/javascript&#34; src=&#34;https://cdnjs.cloudflare.com/ajax/libs/PapaParse/4.1.2/papaparse.min.js&#34;&gt;&lt;/script&gt;
+</span><span style="color:#0f0"></span></code></pre></div><div class="highlight"><pre style="background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#0f0"># it&#39;s easy, use pandas library</span>
+<span style="color:#f00">import</span> pandas <span style="color:#f00">as</span> pd
+data = pd.read_csv(url)</code></pre></div><div class="highlight"><pre style="background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#0f0"># very intuitive</span>
+data = read.csv(<span style="color:#f00">url</span>(data_url))</code></pre></div><div class="highlight"><pre style="background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sheets" data-lang="sheets">Use =importData(`url`) formula. For instance enter 
+`=importData(https://data.invisement.com/q/AAPL.csv)` 
+in any cell.</code></pre></div><div class="highlight"><pre style="background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-excel" data-lang="excel">From menu select `Data` then click `from Text/CSV` 
+and in `File name` enter `url`: `https://data.invisement.com/q/AAPL.csv`</code></pre></div>
+<p><img src="/images/graphs.jpg"></p>
+
+<p><strong>Download any data file through its https <code>url</code>:</strong><br />
+ <a href="https://data.invisement.com/q/AAPL.csv">https://data.invisement.com/q/AAPL.csv</a></p>
+
+<p><strong>View any data file through our <code>viewer</code>:</strong><br />
+<a href="https://data.invisement.com?q/AAPL.csv">https://data.invisement.com?q/AAPL.csv</a></p>
+
+<script>
+    change_tag = function (elem) {
+        old = new RegExp(elem.defaultValue, "g")
+        document.body.innerHTML = document.body.innerHTML.replace(old, elem.value);
+        elem.defaultValue = elem.value
+    }
+</script>
+
+    
+        
+
+<h1 id="about">About</h1>
+
+<blockquote>
+<p>THE DATA AND SERVICES ARE PROVIDED &ldquo;AS IS&rdquo;, WITHOUT WARRANTY OF ANY KIND.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY.</p>
+</blockquote>
+
+<h3 id="services">Services</h3>
+
+<ul>
+<li>Financial Data Provider</li>
+<li>Investment Advisory</li>
+<li>Cloud Solutions and Big Data Management</li>
+</ul>
+
+<h3 id="contact">Contact</h3>
+
+<p>inVisement
+100 E Boston Street, #10<br />
+Seattle, WA 98102<br />
+finmint2 at gmail.com</p>
+
+    
+
+        </div>
+        <div class="dark-box">
+            
+            <div class="lang-selector">
+                
+                <a href="#" data-language-name="md">HTML</a>
+                
+                <a href="#" data-language-name="js">JS</a>
+                
+                <a href="#" data-language-name="python">Python</a>
+                
+                <a href="#" data-language-name="r">R</a>
+                
+                <a href="#" data-language-name="sheets">Google Sheets</a>
+                
+                <a href="#" data-language-name="excel">Excel</a>
+                
+            </div>
+            
+        </div>
+    </div>
+    
+</body>
+</html>

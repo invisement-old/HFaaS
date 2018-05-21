@@ -1,0 +1,91 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/4.1.2/papaparse.min.js"></script>
+
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/pivottable/2.19.0/pivot.min.css">
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/1.33.1/plotly.min.js"></script>
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/pivottable/2.19.0/pivot.min.js'></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pivottable/2.19.0/plotly_renderers.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pivottable/2.19.0/export_renderers.min.js"></script>
+
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.11/c3.min.css">
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.11/c3.min.js"></script>
+
+        <script type="text/javascript" src="https://pivottable.js.org/dist/c3_renderers.js"></script>
+
+
+    </head>
+    <body>
+
+<img src="https://invisement.com/images/logo.png" width="100" align="left">
+<label style="display: table; margin: auto; font: larger bold; color: red;">Fetch csv: <input type="text" id="dPage-input"></label>
+<div id="output"></div>
+
+
+<script>
+
+    $(document).ready(function(){
+        $('#dPage-input').on('change', function(){
+            var dPage = "https://data.invisement.com/".concat($(this).val())
+            fetch(dPage)
+                .then(response => response.text())
+                .then(refreshPivot);
+        });
+        $('#dPage-input').val(location.search.slice(1)).change()
+    });
+    refreshPivot = function (results) {
+        var renderers = $.extend($.pivotUtilities.renderers, $.pivotUtilities.plotly_renderers, $.pivotUtilities.export_renderers);
+        var first = $.pivotUtilities.aggregatorTemplates.first
+        aggregators = {'Values': function() {return first()(['value'])}}
+        $.extend(aggregators, $.pivotUtilities.aggregators)
+        //$('#data-table-frame').html('<table id="data-table" class="display compact cell-border" width="100%"></table>');
+        var data = Papa.parse(results, {skipEmptyLines: true}).data
+        $('#output').pivotUI(data, {
+            rows: ["tag"], cols: ["period"],
+            renderers: renderers, 
+            //onRefresh: export_pivot_data,
+            sorters: {
+                period: function(a, b) {return b-a;}
+            },
+            aggregators: aggregators
+        });
+    };
+
+
+
+
+
+
+/*
+$(function(){
+    var renderers = $.extend($.pivotUtilities.renderers, $.pivotUtilities.plotly_renderers, $.pivotUtilities.export_renderers);
+    var first = $.pivotUtilities.aggregatorTemplates.first
+    aggregators = {'Values': function() {return first()(['value'])}}
+    $.extend(aggregators, $.pivotUtilities.aggregators)
+        Papa.parse("https://raw.githubusercontent.com/nicolaskruchten/Rdatasets/master/csv/datasets/iris.csv", {
+            download: true,
+            skipEmptyLines: true,
+            complete: function(parsed){
+                $("#output").pivotUI(parsed.data, {
+                    //rows: ["Petal.Length"],
+                    //cols: ["Petal.Width", "Species"],
+                    renderer: renderers, //$.pivotUtilities.c3_renderers["Scatter Chart"],
+                    rendererOptions: { c3: { size: {width: 600, height: 600} } }
+                });
+            }
+        });
+     });
+*/
+</script>
+
+</body>
+</html>
