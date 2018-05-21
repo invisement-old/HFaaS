@@ -11,6 +11,7 @@ def secs_from_zips ():
     archived_sec_zips = gate.read_archived_sec_zips()
     all_sec_zip_urls = gate.scrape_sec_zip_urls()
     new_sec_zip_urls = [url for url in all_sec_zip_urls if os.path.basename(url) not in archived_sec_zips]
+    print("New sec zip files are ", new_sec_zip_urls)
     for sec_zip_url in sorted(new_sec_zip_urls):
         secs = gate.read_zip_sec (sec_zip_url)
         for cik, sec in secs.groupby('cik'):

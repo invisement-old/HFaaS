@@ -15,7 +15,7 @@ touch .temp/stop.watch # record start time by creating a temp file
 # python -c "import company; company.test();"
 ## extract all new files from sec
 python -c "import app.update; app.update.secs_from_zips();" # update sec data from zips
-python -c "import app.update; app.update.secs_from_xml()" # update sec data from xml
+python -c "import app.update; app.update.secs_from_xmls()" # update sec data from xml
 ## convert newly updated sec files to periodical (y, q) dataset
 find data/sec/* -newer .temp/stop.watch -exec python -c "import sys; import app.transform as tr; tr.to_periodic(sys.argv[1])" {} \;
 ## transform periodic files to stmts

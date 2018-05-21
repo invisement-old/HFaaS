@@ -1,5 +1,5 @@
 ''' utilities and functions to read, write, scrape, and upload. 
-    It is the interface gate of app to outside world: file system or web '''
+    It is the interface gate of app module to the environment system: file system or web '''
 
 from app import *
 import pandas as pd
@@ -8,7 +8,6 @@ import zipfile
 import io, os
 from lxml import html
 import json
-
 
 def read_archived_sec_zips ():
     try:

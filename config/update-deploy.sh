@@ -4,12 +4,11 @@ gcloud compute instances start deploy
 gcloud compute scp ~/PROJECTS/inVisement/config/exclude ali@deploy:~/PROJECTS/inVisement/.git/info/exclude
 gcloud compute ssh ali@deploy << update-deploy
 cd ~/PROJECTS/inVisement/
-git fetch
+git fetch origin
 git reset --hard origin/master
 git merge master/origin
-git diff --name-only
 source .env/bin/activate
-cat config/python-requirements.txt | xargs -n 1 pip install
+cat config/pythonRequirements.txt | xargs -n 1 pip install
 deactivate
 update-deploy
 ## turn off the deploy machine

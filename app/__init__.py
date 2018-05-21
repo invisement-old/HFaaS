@@ -12,7 +12,6 @@ ARCHIVE_DATA = 'archive-data/'
 SEC_KEY = ['tag', 'date', 'qtrs']
 SEC_COLS = ['tag','date', 'qtrs', 'unit', 'value']
 SEC_ENCODING = 'latin1'
-#NEW_SUBMISSIONS = 'https://www.sec.gov/Archives/edgar/full-index/form.idx' 
 NEW_SUBMISSIONS = 'https://www.sec.gov/Archives/edgar/full-index/xbrl.idx'
 OLD_SUBMISSIONS = 'data/basic/xbrl.idx'
 DATA_SETTING = 'data/basic/data-setting.json'
