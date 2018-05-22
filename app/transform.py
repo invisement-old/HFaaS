@@ -10,7 +10,7 @@ tmpl = pd.read_csv (STMT_TEMPLATE).set_index('tag').filter(['tag', 'item', 'loc'
 
 def to_periodic(sec_file):
     ''' from sec file in sec_file creates quartely and yealry secs and save'''
-    sec = pd.read_csv(sec_file).query('date > @FILL_MISSING_SINCE')
+    sec = pd.read_csv(sec_file, dtype={'date': str})#.query('date > @FILL_MISSING_SINCE')
     q, y = st.make_quarterly_yearly_sec (sec)
     cik = os.path.basename(sec_file).split('.')[0]
     ticker = cik2ticker.get(cik, cik)

@@ -21,7 +21,10 @@ def secs_from_zips ():
     return
 
 def secs_from_xmls ():
-    submissions = gate.scrape_xml_submissions_page (NEW_SUBMISSIONS) # scrape it
+    response = requests.get(NEW_SUBMISSIONS)
+    response.raise_for_status()
+    new_file = response.content
+    submissions = gate.scrape_xml_submissions_page (response.url) # scrape it
     old_submissions = gate.scrape_xml_submissions_page (OLD_SUBMISSIONS)
     new_submissions = submissions[~submissions['file'].isin(old_submissions['file'])]
     new_submissions = new_submissions.set_index('cik')['file'] # set index
@@ -43,6 +46,6 @@ def secs_from_xmls ():
             gate.update_df (sec, SEC_FOLDER+str(cik)+'.csv', key=SEC_KEY, keep='last')
         except Exception as e:
             print ('ERROR! could not extract xml from ', url, e)
-    with open(OLD_SUBMISSIONS, 'wb') as f:
-        f.write(submission_index_page)
+    with open(OLD_SUBMISSIONS, 'wb') as f: # wrtite NEW_SUBMISSIONS as the OLD_Submissions since it is used.
+        f.write(new_file)
 

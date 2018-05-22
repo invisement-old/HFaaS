@@ -17,9 +17,9 @@ touch .temp/stop.watch # record start time by creating a temp file
 python -c "import app.update; app.update.secs_from_zips();" # update sec data from zips
 python -c "import app.update; app.update.secs_from_xmls()" # update sec data from xml
 ## convert newly updated sec files to periodical (y, q) dataset
-find data/sec/* -newer .temp/stop.watch -exec python -c "import sys; import app.transform as tr; tr.to_periodic(sys.argv[1])" {} \;
+# find data/q/* -newer .temp/stop.watch -exec python -c "import sys; import app.transform as tr; tr.to_periodic(sys.argv[1])" {} \;
 ## transform periodic files to stmts
-find data/sec/* -newer .temp/stop.watch -exec python -c "import sys; import app.transform as tr; tr.to_stmt(sys.argv[1])" {} \;
+# find data/y/* -newer .temp/stop.watch -exec python -c "import sys; import app.transform as tr; tr.to_stmt(sys.argv[1])" {} \;
 deactivate
 ## push to gstorage all files in sec and finset that newly updated
 find data/sec/* -newer .temp/stop.watch | gsutil -m cp -r -c -Z -I gs://data.invisement.com/sec

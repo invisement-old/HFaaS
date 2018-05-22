@@ -14,7 +14,7 @@ def make_quarterly_yearly_sec (sec, TAG='tag'):
     Y_one = Q_one.groupby([TAG, 'unit']).apply(lambda q: q.resample('Y').agg({'date':'last', 'qtrs':lambda x: pd.Series.sum(x,min_count=4), 'value':lambda x: pd.Series.sum(x,min_count=4)})).reset_index()
     Q_one = Q_one.reset_index()
     Q = pd.concat([Q_zero, Q_one])
-    Y = pd.concat([Y_zero, Y_one])
+    Y = pd.concat([Y_zero, Y_one], sort=False)
     return Q, Y
 
 def all_quarters (group):

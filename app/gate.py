@@ -59,8 +59,9 @@ def scrape_xml_submissions_page (path):
         submissions = pd.read_csv(path, sep='|', skiprows=[0,1,2,3,4,5,6,7, 9], dtype=DATATYPE)
         submissions = submissions.rename(columns = {'Filename': 'file', 'Form Type': 'form', 'CIK': 'cik'})
         submissions = submissions.query('form in ["10-K", "10-Q", "10-K/A", "10-Q/A"]')
-        submissions['file'] = 'https://www.sec.gov/Archives/'+ submissions['file']
-        submissions['file'] = submissions['file'].str.replace('-|.txt', '')+'/index.json'
+        urls = 'https://www.sec.gov/Archives/'+ submissions['file']
+        urls = urls.str.replace('-|.txt', '')+'/index.json'
+        submissions = submissions.assign(file = urls)
     except Exception:
         print('did not find submissions at ', path)
         submissions = pd.DataFrame(columns = ['file', 'form', 'cik'])

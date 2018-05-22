@@ -24,12 +24,15 @@ weight: 10
 - **y/TICKER.csv**
     - Yearly data about core financial indicators for each company by. 
     - columns: [`tag`, `period`, `value`, `unit`, `date`]
+
+<!---
 - **q-stmt/TICKER.csv**
     - Quarterly panel data of the financial statements for each company. 
     - rows: `tag`, columns: `period`
 - **y-stmt/TICKER.csv**
     - Yearly panel data of the financial statements for each company. 
     - rows: `tag`, columns: `period`
+--->
 
 <aside>
 Please replace `TICKER` with company's ticker symbol and CIK with its CIK. For instance, Apple's TICKER is AAPL and its CIK is 320193.

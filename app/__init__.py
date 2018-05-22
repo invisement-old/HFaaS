@@ -40,7 +40,7 @@ STMT_FOLDER = 'data/stmt/'
 QUARTERLY_FOLDER = "data/q/"
 YEARLY_FOLDER = "data/y/"
 CIK2TICKER = "data/basic/company.csv"
-FILL_MISSING_SINCE = 19590101
+FILL_MISSING_SINCE = "19590101"
 
 
 

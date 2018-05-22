@@ -6,7 +6,6 @@ gcloud compute ssh ali@deploy << update-deploy
 cd ~/PROJECTS/inVisement/
 git fetch origin
 git reset --hard origin/master
-git merge master/origin
 source .env/bin/activate
 cat config/pythonRequirements.txt | xargs -n 1 pip install
 deactivate
