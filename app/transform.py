@@ -35,7 +35,7 @@ def to_stmt (periodic_file): ## fins comes from q or y
     stmts = stmts.dropna(subset=['item']).drop_duplicates(['period', 'item'], keep='last')
     stmts = stmts.set_index(['loc', 'item', 'period'])['value']
     stmts = stmts.unstack('period')
-    path, name = os.path.split(fins)
+    path, name = os.path.split(periodic_file)
     stmts.to_csv(path+'-stmt/'+name, date_format="%Y%m%d")
     return
 
