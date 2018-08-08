@@ -96,6 +96,16 @@ sudo apt-get install google-cloud-sdk-app-engine-python
 gcloud init --concole-only # follow instructions. 
 ```
 
+# install `hugo` static site generator
+download the latest version from https://github.com/gohugoio/hugo/releases
+
+```bash
+wget https://github.com/gohugoio/hugo/releases/download/v0.46/hugo_0.46_Linux-64bit.deb
+```
+
+
+
+
 ## Pin `vscode`, `Files`, `Terminal` to desktop shelf
 Hit Launcher (bottom left corner of desktop), search for desired app (i.e. vscode or Terminal or Files) right click by alt+click, and click `pin to shelf`.
 Now, click on `vscode` on your destop shelf (bottom bar) to open it, it is beautiful (isn't it?!), write a little file, save it in PROJECTS.

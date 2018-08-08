@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Api on inVisement</title>
+    <link>https://invisement.com/tags/api.html</link>
+    <description>Recent content in Api on inVisement</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 01 Apr 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://invisement.com/tags/api/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>How to access invisement data</title>
+      <link>https://invisement.com/api_reference.html</link>
+      <pubDate>Sun, 01 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://invisement.com/api_reference.html</guid>
+      <description>Available Datasets  basic/company.csv (view or download)  Includes a basic information about companies. Columns: [ticker, cik, irs, name, sic, state]  sec/CIK.csv  Consolidated financial data submitted by company in 10-K and 10-Q forms. columns: [tag, date, qtrs, value, unit]  q/TICKER.csv  Quarterly data about core financial indicators for each company. columns: [tag, period, value, unit, date]  y/TICKER.csv  Yearly data about core financial indicators for each company by.</description>
+    </item>
+    
+  </channel>
+</rss>

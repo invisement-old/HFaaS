@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head>
+         
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>How to access invisement data</title>
+        
+        <style>
+
+    html body {
+        font-family: 'Roboto', sans-serif;
+        background-color: white;
+    }
+
+    :root {
+        --accent: blue;
+        --border-width:  5px ;
+    }
+
+</style>
+
+
+<link rel="stylesheet" href="https://invisement.com/css/main.css">
+
+
+
+
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+
+
+
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+ 
+
+
+
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+
+<script>$(document).on('click', function() { $('.collapse').collapse('hide'); })</script>
+ <meta name="generator" content="Hugo 0.42.1" />
+        
+
+        
+    </head>
+
+    
+    
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+    
+
+    <body>
+         
+        <nav class="navbar navbar-default navbar-fixed-top">
+
+            <div class="container">
+
+                <div class="navbar-header">
+
+                    <a class="navbar-brand visible-xs" href="#">How to access invisement data</a>
+
+                    <button class="navbar-toggle" data-target=".navbar-collapse" data-toggle="collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+
+                </div>
+
+                <div class="collapse navbar-collapse">
+                    
+
+                    
+                        <ul class="nav navbar-nav">
+                            <li><a href='/'><img height='30' alt='inVisement' src='/images/logo.png'></a></li>
+                            
+                                <li><a href="https://data.invisement.com?q-stmt/AAPL.csv">Data</a></li>
+                            
+                                <li><a href="/tags/api">API Docs</a></li>
+                            
+                                <li><a href="/tags/blog/">Blog</a></li>
+                            
+                                <li><a href="/tags/about">About us</a></li>
+                            
+                                <li><a href="/tags">tags</a></li>
+                            
+                        </ul>
+                    
+
+                    
+                        <ul class="nav navbar-nav navbar-right">
+                            
+                                <li class="navbar-icon"><a href="mailto:client@invisement.com"><i class="fa fa-envelope-o"></i></a></li>
+                            
+                                <li class="navbar-icon"><a href="https://github.com/username/"><i class="fa fa-github"></i></a></li>
+                            
+                        </ul>
+                    
+
+                </div>
+
+            </div>
+
+        </nav>
+
+
+<main>
+
+    <div class="item">
+
+    
+    
+    
+
+    
+    
+
+    <h4><a href="/api_reference.html">How to access invisement data</a></h4>
+    <h5>April 1, 2018</h5>
+    
+    <a href="https://invisement.com/tags/api"><kbd class="item-tag">API</kbd></a>
+    
+    <a href="https://invisement.com/tags/doc"><kbd class="item-tag">Doc</kbd></a>
+    
+    <a href="https://invisement.com/tags/how-to"><kbd class="item-tag">How-To</kbd></a>
+    
+    <a href="https://invisement.com/tags/data"><kbd class="item-tag">Data</kbd></a>
+    
+
+</div>
+
+
+    
+    <br> <div class="text-justify">
+
+<h2 id="available-datasets">Available Datasets</h2>
+
+<ul>
+<li><strong>basic/company.csv</strong> (<a href="https://data.invisement.com?basic/company.csv">view</a> or <a href="https://data.invisement.com/basic/company.csv">download</a>)
+
+<ul>
+<li>Includes a basic information about companies.</li>
+<li>Columns: [<code>ticker</code>, <code>cik</code>, <code>irs</code>, <code>name</code>, <code>sic</code>, <code>state</code>]</li>
+</ul></li>
+<li><strong>sec/CIK.csv</strong>
+
+<ul>
+<li>Consolidated financial data submitted by company in 10-K and 10-Q forms.</li>
+<li>columns: [<code>tag</code>, <code>date</code>, <code>qtrs</code>, <code>value</code>, <code>unit</code>]</li>
+</ul></li>
+<li><strong>q/TICKER.csv</strong>
+
+<ul>
+<li>Quarterly data about core financial indicators for each company.</li>
+<li>columns: [<code>tag</code>, <code>period</code>, <code>value</code>, <code>unit</code>, <code>date</code>]</li>
+</ul></li>
+<li><strong>y/TICKER.csv</strong>
+
+<ul>
+<li>Yearly data about core financial indicators for each company by.</li>
+<li>columns: [<code>tag</code>, <code>period</code>, <code>value</code>, <code>unit</code>, <code>date</code>]</li>
+</ul></li>
+</ul>
+
+<!---
+- **q-stmt/TICKER.csv**
+    - Quarterly panel data of the financial statements for each company.
+    - rows: `tag`, columns: `period`
+- **y-stmt/TICKER.csv**
+    - Yearly panel data of the financial statements for each company.
+    - rows: `tag`, columns: `period`
+--->
+
+<p><strong>Download any data file through its https <code>url</code> like:</strong>
+ <a href="https://data.invisement.com/q/AAPL.csv">https://data.invisement.com/q/AAPL.csv</a></p>
+
+<p><strong>View any data file through our <code>viewer</code> like:</strong>
+<a href="https://data.invisement.com?q/AAPL.csv">https://data.invisement.com?q/AAPL.csv</a></p>
+
+<aside>
+Please replace `TICKER` with company's ticker symbol and cik with its CIK. For instance, Apple's TICKER is AAPL and its CIK is 320193.
+</aside>
+
+<h2 id="fetch-data-files">Fetch Data Files</h2>
+
+<p><strong>Example file: <input style="color: blue" type="text" value="q/AAPL.csv" onchange="change_tag(this)"> (you can change it)</strong></p>
+
+<ul>
+<li><code>base</code>    = <a href="https://data.invisement.com">https://data.invisement.com</a></li>
+<li><code>file</code>    = q/AAPL.csv</li>
+<li><code>url</code>     = <code>base</code>/<code>file</code></li>
+<li><code>viewer</code>  = <code>base</code>?<code>file</code></li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-md" data-lang="md">Embed any of our data <span style="color:#f1fa8c">`file`</span> in your html page by pasting
+<span style="color:#f1fa8c">`&lt;iframe src=&#34;https://data.invisement.com?q/AAPL.csv&#34; width=&#34;100%&#34;&gt;&lt;/iframe&gt;`</span>
+in any place of your page.
+Don&#39;t forget to change the <span style="color:#f1fa8c">`src`</span> to <span style="color:#f1fa8c">`base`</span>?`file`.</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#6272a4">//in js, `fetch` the file&#39;s url and then parse it (we recommend `Papa.parse`)
+</span><span style="color:#6272a4"></span>fetch(url)
+    .then(response =&gt; response.text())
+    .then(Papa.parse)
+    .then(response =&gt; response.data) ## output is js array <span style="color:#ff79c6">of</span> arrays [[<span style="color:#f1fa8c">&#39;col1&#39;</span>, <span style="color:#f1fa8c">&#39;col2&#39;</span>, ...][<span style="color:#f1fa8c">&#39;1.1&#39;</span>, <span style="color:#f1fa8c">&#39;1.2&#39;</span>, ...], [<span style="color:#f1fa8c">&#39;2.1&#39;</span>, <span style="color:#f1fa8c">&#39;2.2&#39;</span>, ...] ...]
+    .then(whatever you want to <span style="color:#ff79c6">do</span> <span style="color:#8be9fd;font-style:italic">with</span> parsed data);
+<span style="color:#6272a4">// do not forget to import parser either
+</span><span style="color:#6272a4">// import * as Papa from papaparse or
+</span><span style="color:#6272a4">// &lt;script type=&#34;text/javascript&#34; src=&#34;https://cdnjs.cloudflare.com/ajax/libs/PapaParse/4.1.2/papaparse.min.js&#34;&gt;&lt;/script&gt;
+</span><span style="color:#6272a4"></span></code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#6272a4"># in Python, use pandas library</span>
+<span style="color:#ff79c6">import</span> pandas <span style="color:#ff79c6">as</span> pd
+data <span style="color:#ff79c6">=</span> pd<span style="color:#ff79c6">.</span>read_csv(url)</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#6272a4"># in r:</span>
+data <span style="color:#ff79c6">=</span> read.csv(<span style="color:#ff79c6">url</span>(data_url))</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sheets" data-lang="sheets"># in google-sheets
+Use =importData(`url`) formula. For instance enter
+`=importData(https://data.invisement.com/q/AAPL.csv)`
+in any cell.</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-excel" data-lang="excel"># in Excel:
+From menu select `Data` then click `from Text/CSV`
+and in `File name` enter `url`: `https://data.invisement.com/q/AAPL.csv`</code></pre></div>
+<script>
+    change_tag = function (elem) {
+        old = new RegExp(elem.defaultValue, "g")
+        document.body.innerHTML = document.body.innerHTML.replace(old, elem.value);
+        elem.defaultValue = elem.value
+    }
+</script>
+</div>
+    
+
+    
+    
+
+    
+
+    
+
+</main>
+
+        <footer>
+
+            <p class="copyright text-muted">&copy; All rights reserved for inVisement <img height='30' src='/images/logo.png'></p>
+
+        </footer>
+       
+    </body>
+
+</html>
+

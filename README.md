@@ -61,6 +61,7 @@ _________________
     - goog2sec.csv
 - Temp
 ___________________
+
 ## Data
 
 - source:
@@ -79,6 +80,7 @@ ___________________
     - 10K
     - 10Q
 ___________________
+
 ## Modules
 - extract (source): input
     - extract_goog_fin
@@ -90,9 +92,11 @@ ___________________
     - transform_sec
 - load (op): target
 ___________________
+
 ## Language
 Python 3.6+
 ___________________
+
 ## Objectives
 1. API call to fetch "distilled/processed" financial data about all US stocks
     * Daily Prices
@@ -102,17 +106,19 @@ ___________________
 4. API call to analyze the performance of a portfolio
 5. API call to clean SEC 10k and 10Q data and pickle
 _________
+
 ## Phase1: API call to fetch financial Data
     HFetch (FirmSymbol, Frequency='D', Start_date, End_date, Statement='Price', Item)
     * Load data (Price and Fundemental) into class Firm and pickle
     * readIn method from csv file
     * downLoad method from websites
 ___________
+
 ## Iteration 1.1: file name: Firm.py
-- Readin 1 Quarter (2017Q3) data from SEC Edgar:  
-ReadSEC(url="https://www.sec.gov/files/dera/data/financial-statement-data-sets/", file="2017q3.zip") -> Data.DataSet 
+- Readin 1 Quarter (2017Q3) data from SEC Edgar:
+ReadSEC(url="https://www.sec.gov/files/dera/data/financial-statement-data-sets/", file="2017q3.zip") -> Data.DataSet
     - Download from: https://www.sec.gov/files/dera/data/financial-statement-data-sets/2017q3.zip
-    - Store it in proper format (To Discuss!!!) 
+    - Store it in proper format (To Discuss!!!)
     - Write it into DataBase format or BigData format (Extra feature)
 - Read in 7 files from finance.google and store it in proper format and write a program to do it automatically
 - Transform IBM from quarterly to standard format (as in google)
@@ -128,10 +134,10 @@ ___________
     - Purpose: the main source of financial statements
 - Module: extract_sec_from_xls_submissions.py
     - purpose:
-        - Read daily 10-K, 10-Q submissions by firms to sec (Delta) 
-    - API: 
-        - call: extract_xls_submissions 
-        - args: (sec, new_idx_url, old_idx_path) 
+        - Read daily 10-K, 10-Q submissions by firms to sec (Delta)
+    - API:
+        - call: extract_xls_submissions
+        - args: (sec, new_idx_url, old_idx_path)
         - output: pd.DataFrame [](cik, stmt, item, date, qtrs, value, uom)
     - Functions:
         - extract_xls_submissions
@@ -140,9 +146,10 @@ ___________
         - extract_quarter
         - extract_unit
         - extract_value
-    - references: 
+    - references:
         - https://www.sec.gov/Archives/edgar/full-index/
 _____________________
+
 ## To-Do
 - (Later, not necessary): create a pd.Series to store all key-value things like path, directories, names, urls, ... (to discuss)
 
@@ -157,9 +164,11 @@ _____________________
 
 - Contact with Quandl and others to sell
 ___________________
+
 ## Liscense
 - All rights belongs to the contributors
 ______________
+
 ## Data Source references:
 - Financial Satements Datasets:
 https://www.sec.gov/dera/data/financial-statement-data-sets.html

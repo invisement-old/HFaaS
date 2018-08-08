@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>inVisement</title>
+    <link>https://invisement.com/</link>
+    <description>Recent content on inVisement</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 01 Apr 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://invisement.com/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>How to access invisement data</title>
+      <link>https://invisement.com/api_reference.html</link>
+      <pubDate>Sun, 01 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://invisement.com/api_reference.html</guid>
+      <description>Available Datasets  basic/company.csv (view or download)  Includes a basic information about companies. Columns: [ticker, cik, irs, name, sic, state]  sec/CIK.csv  Consolidated financial data submitted by company in 10-K and 10-Q forms. columns: [tag, date, qtrs, value, unit]  q/TICKER.csv  Quarterly data about core financial indicators for each company. columns: [tag, period, value, unit, date]  y/TICKER.csv  Yearly data about core financial indicators for each company by.</description>
+    </item>
+    
+    <item>
+      <title>About us</title>
+      <link>https://invisement.com/about.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://invisement.com/about.html</guid>
+      <description>About We provide market financial data and services to hedge funds and investment professionals. We do our best to keep dat free or very affordable while raising the bar in quality and reliability.
+ THE DATA AND SERVICES ARE PROVIDED &amp;ldquo;AS IS&amp;rdquo;, WITHOUT WARRANTY OF ANY KIND. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY.
+ Services  Financial Data Provider Investment Advisory Cloud Solutions and Data Management  Contact inVisement 100 E Boston Street, #10 Seattle, WA 98102 invisement at gmail.</description>
+    </item>
+    
+    <item>
+      <title>Chromebook for Developers</title>
+      <link>https://invisement.com/devonchrome.html</link>
+      <pubDate>Fri, 22 Jun 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://invisement.com/devonchrome.html</guid>
+      <description>ChromeOS is a modern approach to laptop: everything runs in a browser but it can host Linux apps. Now, there are serous high-end Chromebooks like Pixelbook from Google, Samsung, and Asus. Chromebooks are very secure, fast, beautiful, and functional. Now you can run Web apps (Dah!), Chrome apps and extensions, android apps (through google play), and (this is exciting) Linux apps (through hosted container).
+Buy a Chromebook or Pixelbook You do not need to do dirty hacks like turn on developer mode, install crouton or termux, or dual boot it with linux.</description>
+    </item>
+    
+  </channel>
+</rss>

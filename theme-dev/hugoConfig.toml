@@ -11,7 +11,7 @@ pygmentsUseClassic = false
 pygmentsUseClasses = false
 linenos = "table"
 pygmentsCodefences = true
-pygmentsStyle = "dracula"
+pygmentsStyle = "perldoc"
 #pygmentsCodefencesGuessSyntax = true
 
 [pygmentsOptions]
