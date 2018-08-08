@@ -1,7 +1,7 @@
 ---
 title: "Chromebook for Developers"
-date: 2018-06-22
-tags: ["Blog", "Chromebook", "Google Cloud", "Linux", "Pixelbook", "Crostini", "DevOps", "Python"]
+date: 2018-08-07
+tags: ["Blog", "Chromebook", "Google Cloud", "Linux", "Pixelbook", "Crostini", "DevOps", "Python", "conda"]
 
 ---
 
