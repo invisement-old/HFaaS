@@ -46,7 +46,11 @@ cd Downloads
 ```bash
 sudo install git
 sudo git clone https://github.com/inVisement/HFaaS.git ~/PROJECTS/ #change repo address
+git config --global user.name "your-user-name"
+git config --global user.email "your-email"
 ```
+
+Optionally, you can go to .git/config and edit url to add your usename (and password, but it is not secure though) like `url = https://your-username:your-password@the-repo-url-address`
 
 # Install `python`
 ```bash
@@ -78,6 +82,8 @@ The change the default `python` interpreter to virtual environment. Press Ctr+Sh
 Press Ctr+\` to toggle integrated terminal (or View > Integrated Terminal from Menue). 
 
 Open your project folder (File > Open Folder) create a python file. Send any line or selection of lines to execute in terminal by Ctrl+Enter
+
+Fortunately, `vscode` has an excellent `git` integration tool that you can find in sidebar icons to add and commit (check mark icon) and push and pull from the status bar. You can change repo and branch through status bar, too.
 
 
 # Install `google cloud` sdk and set it up
