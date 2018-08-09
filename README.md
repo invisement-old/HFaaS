@@ -1,11 +1,16 @@
-# finMint
+# inVisement.com
 Hedge Fund As A Service
 - We trust in machine
 - Machine Learning for Finance
+- Financial Data Provider
+- Fund Management and Portfolio Recommendation
+- Cloud solutions to Financial Firms
 
 ## Future features
 - reading from html submissions instead of xml for sec submissions
 - running through all years for complete dataset (xmls by cik)
+- Upload historical price data
+- Create "back in time machine" for back-testing, data transaction with record stamp
 
 ## Process
 ```mermaid
@@ -48,19 +53,6 @@ Backup plan:
     - data are in 2 places: paid (files), static (compressed objects)
 
 _________________
-## Files and Folders
-- DevCodes: all devcodes, shared on github
-    - Main.py
-    - Sec2df.py
-    - Readme.md
-    - downGoogle.py
-- Input
-    - SEC
-        - Archive
-- Output
-    - goog2sec.csv
-- Temp
-___________________
 
 ## Data
 
