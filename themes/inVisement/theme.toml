@@ -9,19 +9,19 @@ title = "inVisement"
 theme = "inVisement"
 #disqusShortname = "clientrelationship" # delete this to disable disqus comments
 googleAnalytics = "UA-123665575-1"
-publishDir = "invisement.com"
+publishDir = "staticSite"
 uglyurls = true
 #disableKinds = ["home"]
 
 ## to format code blocks
-pygmentsCodefences = true
-pygmentsStyle = "dracula"
 
-#pygmentsUseClassic = false
-#pygmentsUseClasses = false
-#pygmentsCodefencesGuessSyntax = true
-#linenos = "table"
-
+[pygmentsOptions]
+    linenos = "table"
+    pygmentsUseClassic = false
+    pygmentsUseClasses = false
+    pygmentsCodefences = true
+    pygmentsStyle = "dracula"
+    #pygmentsCodefencesGuessSyntax = true
 
 [taxonomies]
 #    tag = "tags"

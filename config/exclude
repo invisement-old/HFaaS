@@ -5,10 +5,9 @@
 # *.[oa]
 # *~
 
-!data/*/include.me
 *data/*
 .*/*
 __*
 *.pyc
-!include.me
-
+invisement.com/*
+resources/*

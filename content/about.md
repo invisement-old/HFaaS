@@ -1,13 +1,14 @@
 ---
-
-weight: 100
+title: "About"
+date: 2018-08-08
+tags: ["About us", "inVisement"]
 
 ---
 
+<img src="/images/fin-banner.jpg" width="100%">
 
-# About
-We provide market financial data and services to hedge funds and investment professionals. We do our best to keep dat free or very affordable while raising the bar in quality and reliability.
-
+# About us
+We provide market financial data and services to hedge funds and investment professionals. Data are free.  
 
 >THE DATA AND SERVICES ARE PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND. 
 IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
@@ -19,10 +20,11 @@ LIABILITY.
 - Cloud Solutions and Big Data Management
 
 ### Contact
-inVisement
+inVisement  
 100 E Boston Street, #10  
 Seattle, WA 98102  
-finmint2 at gmail.com
+
+inVisement at gmail.com
 
 
 

@@ -1,0 +1,10 @@
+{{ partial "header" . }}
+<main>
+
+    <img onerror="this.style.display='none'" src="{{ .Params.banner }}">
+    <div class="text-justify">
+    
+        {{ .Content }}
+    </div>
+</main>
+{{ partial "footer.html" . }}
