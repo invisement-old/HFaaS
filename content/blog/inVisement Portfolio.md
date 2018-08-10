@@ -1,12 +1,28 @@
 ---
 title: "inVisement Portfolio Holdings"
-date: 2018-08-08
+date: 2018-08-09
 tags: ["Blog", "inVisement Portfolio", "Stock Recommendation"]
 banner: /images/inVisement-graph.png
 
 ---
 
-# inVisement Portfolio
+
+## inVisement Position: Hold
+inVisement portfolio consists of 
+
+- 15% Cash
+- 25% call options for QQQ, SPY, DIA, AAPL, and GS
+- 60% Stocks from GOOGL, MDB, SQ, CRM, TWTR, NVDA
+
+We are bullish and aiming at 25% overall return of our portfolio for 2018:
+
+- 15% Return from our stock positions
+- 10% Return from our margin account (15% minus 5% borrowing cost) 
+- 40% Return from our call options
+- 0% from cash
+
+Total Expected Return = (15%+10%) * 60% + 40% * 25% + 0% * 15% = 25%
+
 
 ## Stocks
 

@@ -1,15 +1,19 @@
 ---
 title: "Chromebook for Developers"
-date: 2018-08-08
+date: 2018-08-01
 tags: ["Blog", "Chromebook", "Google Cloud", "Linux", "Pixelbook", "Crostini", "DevOps", "Python", "conda"]
 
 ---
 
 <img src="/images/vscode-chrome.png" width="100%">
 
-ChromeOS is a modern approach to laptop: everything runs in a browser but it can host Linux apps. Now, there are serous high-end Chromebooks like Pixelbook from Google, Samsung, and Asus. Chromebooks are very secure, fast, beautiful, and functional. Now you can run Web apps (Dah!), Chrome apps and extensions, android apps (through google play), and (this is exciting) Linux apps (through hosted container).
+ChromeOS is a modern approach to laptop: everything runs in a browser but it can host Android and Linux apps. 
+
+You can run Web apps (Dah!), Chrome apps and extensions, android apps (through google play), and (this is exciting) Linux apps (through hosted container).
 
 ## Buy a Chromebook or Pixelbook
+Chromebooks are very secure, fast, beautiful, and functional. Mine is a Pixelbook and it is the best device I ever had. 
+
 You do not need to do dirty hacks like turn on `developer` mode, install `crouton` or `termux`, or `dual boot` it with linux.
 ChromeOS is very secure and it is one of its biggest advantages. Do not turn on the `developer` mode, which sacrifices its security.
 
@@ -79,9 +83,9 @@ In `vscode`, you can go to Extensions and install extensions you want like `pyth
 
 The change the default `python` interpreter to virtual environment. Press Ctr+Shift+P to launch command Pallete. Type `Python: Select Interpreter` and select it. Among your choices, choose "Anaconda Inc, Python whatever (your-env)".
 
-Press Ctr+\` to toggle integrated terminal (or View > Integrated Terminal from Menue). 
+Press Ctr+\` to toggle integrated terminal (or View > Integrated Terminal from Menu). 
 
-Open your project folder (File > Open Folder) create a python file. Send any line or selection of lines to execute in terminal by Ctrl+Enter
+Open your project folder (File > Open Folder) and create a python file. Send any line or selection of lines to execute in terminal by Ctrl+Enter
 
 Fortunately, `vscode` has an excellent `git` integration tool that you can find in sidebar icons to add and commit (check mark icon) and push and pull from the status bar. You can change repo and branch through status bar, too.
 

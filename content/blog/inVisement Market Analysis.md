@@ -1,41 +1,49 @@
 ---
-title: "Market Analysis August 2018"
-date: 2018-08-01
-tags: ["Blog", "inVisement Portfolio", "Market Analysis", "Bull or Bear", "Speculate and Adjust", "Market Fluctuations"]
+title: "Market Analysis"
+date: 2018-08-10
+tags: ["Blog", "Market Analysis", "Bull or Bear", "Speculate and Adjust"]
 
 ---
 
 <img src="/images/market-graph.png" width="100%">
 
 
-# Market Analysis for August 2018
+Althoug the market (especially tech) is a little stretched but inVisement predicts a healthy growth.
+title: "Market Analysis August 2018"
+
+## Fundamentals
+The US (and the rest of the world) enjoys high economic growth, low eomployment rate, and high capex investments. It has shown strength to tolerate trade war and higher prime rates.
+
+Tech companies are monetizing their past innovations. Tech sector revenue growth exceeds 20% and often beats analysts expectations. The innovation engine (venture capitals and start-ups) is heavily invested and we expect more products, innovations, and distruptions to emerge.
+
+One the other hand, investors are a little cautious not to experience what they did during the great recession (2008) or dot-com burst (2000). Moreover, the borrowing cost is not cheap anymore (prime-rate in near 3%).
+
+## Market View
+So the rsult is periods of growth by speculations followed by adjustments days during earning calls. After each earning season, investors start speculating about the future of the tech stocks. They keep betting on which ones will run faster. Meanwhile, the tech companies keep growing and dragging the rest of the economy. During the earning calls, adjustments will happen. Companies who could not live up to the expectations would fall back to the previous quarter prices (Ex: Twitter and Facebook) but will jump if they surpass the expectations (Ex: Amazon and Alphabet and Apple).
 
 
-There is an ongoing debate about tech bubble, similar to dot-com bubble burst.
-What does inVisement think?
+## Speculate and Adjust
 
-We call the current market, especially the Tech sector, "speculate and adjust", which means overall growth with high volatility.
+We call the current market, especially the Tech sector, "speculate and adjust", which means moderate growth with high volatility.
 
-The US (and world) economy is exceptionally good (historical growth rate, low eomployment rate, high investment) in a way that it can tolerate trade war rant by White House and higher prime-rates by Federal Reserve without a sweat.
+- **High Volatility**: The market will keep experiencing high volatility. There will be frequent adjustments periods in which market will tumble to adjust itself to cold fact and figures emerging from earning calls.
 
-Tech companies are monetizing from innovations of their past. Tech sector revenue and earning is growing 20%+ annually and they keep beating the market pessimism. The innovation engine (venture capital and start-up market) is heavily invested and we should expect more products, innovations, and distruptions to emerge.
+- **Hold**: The maket will look like a  very bumpy ascending hike. Growing slowly and constantly (caused by speculations on tech revenue growth) accompanied with little burts and price adjustmentss every month or so. inVisement thinks it is a healthy market, growing but cautious. We keep our positions while adding to our cash reserves.
 
-One the other hand, investors are a little cautious not to experience what they did during the great recession (2008) or dot-com burst (2000). Moreover, the borrowing cost is not so cheap (prime-rate in near 3%).
+## inVisement Positions: Hold
+inVisement portfolio consists of 
 
-So the rsult is periods of growth by speculation followed by adjustments days caused by cold facts. After each quarter earning calls, investors start speculating about the future of the tech stocks. They keep betting on which one will run faster. Meanwhile, the tech companies keep growing and pulling the rest of the economy. During the earning calls, adjustmentss happen. Companies who could not live up to the expectations would fall back to the previous quarter prices (Ex: Twitter and Facebook) but if they surpass the expectations, they will jump (Ex: Amazon and Alphabet and Apple).
+- 15% Cash
+- 25% call options for QQQ, SPY, DIA, AAPL, and GS
+- 60% Stocks from GOOGL, MDB, SQ, CRM, TWTR, NVDA
 
-Off course, there would be overall adjustments of the expectations as well. A good earning call season makes investors bullish and less-than-expected earning call makes them bearish about the overal market.
+We are bullish and aiming at 30% return of our portfolio for 2018:
 
-From inVisement perspective:
+- 15% Return from our stock positions
+- 10% Return from our margin account (15% minus 5% borrowing cost) 
+- 50% Return from our call options
+- 0% from cash
 
-- The fundamentals of the economy and money market is strong. Nothing is predictable but it seems the horizon is clear and there is no big, thick, dark cloud in sky.
+Total Expected Return = (15%+10%) * 60% + 50% * 25% + 0% * 15% = 27.5%
 
-- The market has more room to grow and it will keep growing, expecially the tech sector. We predict 20%+ annual growth rate (equal to revenue growth) for tech companies (NASDAQ-100) and 10%+ annual growth for total market (S&P 500).
-
-- The market will keep experiencing high volatility. There will be frequent adjustments periods in which market will tumble to adjust itself to cold fact and figures emerging from earning calls.
-
-- The maket will look like a  very bumpy ascending hike. Growing slowly and constantly (caused by speculations on tech revenue growth) accompanied with little burts and price adjustmentss every month or so. We think it is a healthy market, upbeat and cautious. We keep investing while adding to our cash slowly.
-
-- Right now, inVisement portfolio is consist of 25% Cash, 25% tech stocks (GOOGL, AAPL, CRM, SQ, TWTR, MDB, GS), 50% Buy Call options (on SPY and QQQ and DIA), 10% Buy Put options (on AMZN and NFLX). Our beta is about 3 times bigger than QQQ. We are aiming at 30% return by end of year (mostly from our call options).
-
-
+Please check out [inVisement Portfolio](invisement-portfolio.html) for in-depth information.
