@@ -9,7 +9,7 @@ title = "inVisement"
 theme = "inVisement"
 #disqusShortname = "clientrelationship" # delete this to disable disqus comments
 googleAnalytics = "UA-123665575-1"
-publishDir = "invisement.com"
+publishDir = ".invisement.com"
 uglyurls = true
 #disableKinds = ["home"]
 
@@ -40,7 +40,7 @@ pygmentsStyle = "dracula"
     weight = 10
 
 [[menu.main]]
-    url = "/api_doc.html"
+    url = "/api-doc.html"
     name = "API Docs"
     weight = 20
 

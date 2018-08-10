@@ -14,7 +14,7 @@
 ## update blog posts
     cd ~/PROJECTS/inVisement
     hugo --config config/hugoConfig.toml
-    gsutil -m rsync -d -r invisement.com gs://invisement.com
+    gsutil -m rsync -d -r .invisement.com gs://invisement.com
     
 ## copy exclude to git
     cp config/exclude.txt .git/info/exclude.txt

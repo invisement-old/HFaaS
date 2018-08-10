@@ -28,22 +28,22 @@ We call the current market, especially the Tech sector, "speculate and adjust", 
 
 - **High Volatility**: The market will keep experiencing high volatility. There will be frequent adjustments periods in which market will tumble to adjust itself to cold fact and figures emerging from earning calls.
 
-- **Hold**: The maket will look like a  very bumpy ascending hike. Growing slowly and constantly (caused by speculations on tech revenue growth) accompanied with little burts and price adjustmentss every month or so. inVisement thinks it is a healthy market, growing but cautious. We keep our positions while adding to our cash reserves.
+- **Hold**: The maket will look like a  very bumpy ascending hike. Growing slowly and constantly (caused by speculations on tech revenue growth) accompanied with sudden adjustmentss (jump or fall). inVisement thinks it is a healthy market, growing but cautious. We keep our positions while adding to our cash reserves.
 
-## inVisement Positions: Hold
+## inVisement Position: Hold
 inVisement portfolio consists of 
 
-- 15% Cash
-- 25% call options for QQQ, SPY, DIA, AAPL, and GS
 - 60% Stocks from GOOGL, MDB, SQ, CRM, TWTR, NVDA
+- 25% call options for QQQ, SPY, DIA, AAPL, and GS
+- 15% Cash
 
-We are bullish and aiming at 30% return of our portfolio for 2018:
+We are bullish and aiming at 25% return of our portfolio for 2018:
 
 - 15% Return from our stock positions
 - 10% Return from our margin account (15% minus 5% borrowing cost) 
-- 50% Return from our call options
-- 0% from cash
+- 40% Return from our call options
+- 0% Return from cash
 
-Total Expected Return = (15%+10%) * 60% + 50% * 25% + 0% * 15% = 27.5%
+Total Expected Return = (15%+10%) * 60% + 40% * 25% + 0% * 15% = 25%
 
 Please check out [inVisement Portfolio](invisement-portfolio.html) for in-depth information.
