@@ -2,10 +2,9 @@
 title: "Chromebook for Developers"
 date: 2018-08-01
 tags: ["Blog", "Chromebook", "Google Cloud", "Linux", "Pixelbook", "Crostini", "DevOps", "Python", "conda"]
+card: '<img src="/images/vscode-chrome.png" width="100%">'
 
 ---
-
-<img src="/images/vscode-chrome.png" width="100%">
 
 ChromeOS is a modern approach to laptop: everything runs in a browser but it can host Android and Linux apps. 
 

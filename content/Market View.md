@@ -22,7 +22,7 @@ We call the current market sentiment **Speculate and Adjust.** After each earnin
 
 - **Cautious Market**: Investors are a little cautious not to experience what they did during the great recession (2008) and the dot-com burst (2000). Moreover, the borrowing cost is not cheap anymore (prime-rate in near 3%).
 
-- **Raising Rates**: The Fed is constantly raising the prime rate (borrowing cost from Federal Reserve) to fight crawling inflation. Consequently, the mortgage rates are raising and less people are buying homes. Please read our [Market Risk](/blog/market-risk.html) for greater elaboration.
+- **Raising Rates**: The Fed is constantly raising the prime rate (borrowing cost from Federal Reserve) to fight crawling inflation. Consequently, the mortgage rates are raising and less people are buying homes. Please read our [Market Risk](/blogs/market-risk.html) for greater elaboration.
 
 inVisement thinks it is a healthy market, growing but cautious. We keep our positions while adding to our cash reserves.
 

@@ -2,7 +2,7 @@
 title: "inVisement Portfolio Holdings"
 date: 2018-08-09
 tags: ["Blog", "inVisement Portfolio", "Stock Recommendation"]
-banner: /images/inVisement-graph.png
+card: <img src="/images/inVisement-graph.png">
 
 ---
 
@@ -21,12 +21,11 @@ We are bullish and aiming at 25% overall return of our portfolio for 2018:
 - 40% Return from our call options
 - 0% from cash
 
-Total Expected Return = (15%+10%) * 60% + 40% * 25% + 0% * 15% = 25%
-
+**Total Expected Return** = (15%+10%) * 60% + 40% * 25% + 0% * 15% = **25%**
 
 ## Stocks
 
-Company     | Symbol    | Shares    | $ Purchase Cost
+Company     | Symbol    | Shares    | $ Cost
 --- | --- | --- | ---
 Alphabet    | GOOG      | 50        | 55030
 MongoDB     | MDB       | 610       | 23033
@@ -38,7 +37,7 @@ Twitter     | TWTR      | 830       | 27639
 
 ## Call Options
 
-Stock       | Strike $  | Expiration| Contacts          | $ Cost
+Stock       | $ Strike  | Expiration| Contacts          | $ Cost
 ---         | ---       | ---       | ---               | ---
 QQQ         | 183       | 2019-06-21| 10                | 10260
 QQQ         | 190       | 2019-06-21| 10                | 7500
@@ -52,7 +51,7 @@ AAPL        | 245       | 2020-01-17| 10                | 10000
 DIA         | 270       | 2020-01-17| 10                | 10100
 GS          | 280       | 2020-01-17| 10                | 10000
 
-## Cash in $
-50000
+## Cash
+$50000
 
 

@@ -12,7 +12,7 @@ card: '<img src="/images/logo.jpg">'
 
 - <a href="/market-view.html">  <button> MARKET: </button> See market graph and inVisement analysis </a>
 
-- <a href="/market-view.html">  <button> PORTFOLIO: </button> Look at inVisement portfolio </a>
+- <a href="/invisement-portfolio.html">  <button> PORTFOLIO: </button> Look at inVisement portfolio </a>
 
 - <a href="/api-doc.html">  <button> API: </button> Access or download available datasets </a>
 

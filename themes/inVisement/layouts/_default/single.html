@@ -5,8 +5,12 @@
     {{ partial "list-item" . }}
 
     <!-- display a card if exists -->
-    <div style="border: 3px outset; padding: 1em; text-align: left; width: 100%;"> {{ if isset .Params "card" }} {{ .Params.card | markdownify }} {{ end }} </div>
-
+    {{ if isset .Params "card" }}
+        <div style="border: 3px outset; padding: 1em; text-align: left; width: 100%;">  
+            {{ .Params.card | markdownify }}  
+        </div>
+    {{ end }}
+    
     <!--aside class="test-justify"> {{ .TableOfContents }} </aside-->
     <br> <div class="text-justify">{{ .Content }}</div>
     
