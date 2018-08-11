@@ -157,7 +157,7 @@ _____________________
 - Contact with Quandl and others to sell
 ___________________
 
-## Liscense
+## License
 - All rights belongs to the contributors
 ______________
 

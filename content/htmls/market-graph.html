@@ -1,12 +1,3 @@
-{{ partial "header" . }}
-<div style="display: flex; flex-wrap: wrap; max-width: 95vw; margin: auto;">
-<main style="min-width: 300px;">
-    <div class="text-justify">
-    
-        {{ .Content }}
-    </div>
-</main>
-
 
 <div style="height: 700px; min-width:500px; margin: 2em 0;">
         <!-- TradingView Widget BEGIN -->
@@ -28,8 +19,45 @@
           "belowLineFillColorFalling": "rgba(255, 74, 104, 0.05)",
           "symbolActiveColor": "rgba(242, 250, 254, 1)",
           "tabs": [
+          {
+              "title": "Portfolio",
+              "symbols": [
+                {
+                  "s": "NASDAQ:AAPL",
+                  "d": "Apple Inc"
+                },
+                {
+                  "s": "NASDAQ:GOOGL",
+                  "d": "Alphabet"
+                },
+                {
+                  "s": "NYSE:GS",
+                  "d": "Goldman Sachs"
+                },
+                {
+                  "s": "NASDAQ:MDB",
+                  "d": "MongoDB"
+                },
+                {
+                  "s": "NYSE:SQ",
+                  "d": "Square Inc"
+                },
+                {
+                  "s": "NYSE:TWTR",
+                  "d": "Twitter Inc"
+                },
+                {
+                  "s": "NYSE:CRM",
+                  "d": "Salesforce"
+                },
+                {
+                  "s": "NASDAQ:NVDA",
+                  "d": "Nvidia Corp"
+                }
+              ]
+            },
             {
-              "title": "Indices",
+              "title": "Markets",
               "symbols": [
                 {
                   "s": "INDEX:SPX",
@@ -107,7 +135,7 @@
               "originalTitle": "Bonds"
             },
             {
-              "title": "Forex",
+              "title": "Currencies",
               "symbols": [
                 {
                   "s": "FX:EURUSD"
@@ -125,50 +153,13 @@
                   "s": "FX:AUDUSD"
                 },
                 {
-                  "s": "FX:USDCAD"
+                  "s": "BITFINEX:BTCUSD"
                 },
                 {
-                  "s": "FX:USDCNH"
+                  "s": "BITFINEX:ETHUSD"
                 }
               ],
               "originalTitle": "Forex"
-            },
-            {
-              "title": "Portfolio",
-              "symbols": [
-                {
-                  "s": "NASDAQ:AAPL",
-                  "d": "Apple Inc"
-                },
-                {
-                  "s": "NASDAQ:GOOGL",
-                  "d": "Alphabet"
-                },
-                {
-                  "s": "NYSE:GS",
-                  "d": "Goldman Sachs"
-                },
-                {
-                  "s": "NASDAQ:MDB",
-                  "d": "MongoDB"
-                },
-                {
-                  "s": "NYSE:SQ",
-                  "d": "Square Inc"
-                },
-                {
-                  "s": "NYSE:TWTR",
-                  "d": "Twitter Inc"
-                },
-                {
-                  "s": "NYSE:CRM",
-                  "d": "Salesforce"
-                },
-                {
-                  "s": "NASDAQ:NVDA",
-                  "d": "Nvidia Corp"
-                }
-              ]
             }
           ]
         }
@@ -178,6 +169,3 @@
                 
 
 </div>
-
-</div>
-

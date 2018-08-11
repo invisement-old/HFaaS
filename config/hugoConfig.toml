@@ -36,17 +36,27 @@ pygmentsStyle = "dracula"
 
 [[menu.main]]
     url = "https://data.invisement.com?q-stmt/AAPL.csv"
-    name = "Data"
+    name = "Explore Datasets"
     weight = 10
 
 [[menu.main]]
+    url = "/market-view.html"
+    name = "Market View"
+    weight = 15
+
+[[menu.main]]
+    url = "/invisement-portfolio.html"
+    name = "Portfolio"
+    weight = 17
+
+[[menu.main]]
     url = "/api-doc.html"
-    name = "API Docs"
+    name = "API Doc"
     weight = 20
 
 [[menu.main]]
-    url = "/blog.html"
-    name = "Blog"
+    url = "/blogs.html"
+    name = "Blogs"
     weight = 30
 
 [[menu.main]]

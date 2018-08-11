@@ -1,15 +1,20 @@
 ---
 date: 2018-08-08
-banner: /images/logo.jpg
+card: '<img src="/images/logo.jpg">'
 
 ---
+
+<img src="/images/logo.jpg">
+
 ### Market Data Provider to Financial Firms
 
 - <a href='https://data.invisement.com?q-stmt/AAPL.csv'> <button> VIEWER: </button> Explore our data sets </a>
 
-- <a href="/api_doc.html">  <button> API </button> Access or download market data </a>
+- <a href="/market-view.html">  <button> MARKET: </button> See market graph and inVisement analysis </a>
 
-- <a href="/blog.html"> <button> BLOG </button> Read Market Analysis, Investment tips, and Fintech News </a>
+- <a href="/market-view.html">  <button> PORTFOLIO: </button> Look at inVisement portfolio </a>
+
+- <a href="/api-doc.html">  <button> API: </button> Access or download available datasets </a>
 
 ----
 

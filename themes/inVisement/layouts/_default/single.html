@@ -3,8 +3,9 @@
 <main>
 
     {{ partial "list-item" . }}
-    
-    <img onerror="this.style.display='none'" src="{{ .Params.banner }}">
+
+    <!-- display a card if exists -->
+    <div style="border: 3px outset; padding: 1em; text-align: left; width: 100%;"> {{ if isset .Params "card" }} {{ .Params.card | markdownify }} {{ end }} </div>
 
     <!--aside class="test-justify"> {{ .TableOfContents }} </aside-->
     <br> <div class="text-justify">{{ .Content }}</div>
