@@ -7,23 +7,21 @@ card: '<img src="/images/corp-banner.jpg" width="100%">'
 ---
 
 
-# About us
-inVisement is the first "Hedge Fund as a Service--HFaaS" to democratize the investment. We are thrilled to make services that has been available only to prestige Hedge Funds accessible to every investor and investment professional. We started with providing free, accurate, reliable market data, and give consultancy to financial firms on migrating to the cloud and Fintech world.  
-
->THE DATA AND SERVICES ARE PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND. 
-IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY.
+## About us
+inVisement is the first "Hedge Fund as a Service--HFaaS." We are thrilled to offer services to the public that have been only available to elite hedge funds.
 
 ### Services
 - Financial Data Provider
 - Investment Advisory
 - Cloud Solutions and Big Data Management
 
-### Contact
-inVisement  
-100 E Boston Street, #10  
-Seattle, WA 98102  
+### Disclaimer
+>THE DATA AND SERVICES ARE PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND. 
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY.
 
-inVisement at gmail.com
+For general inquiry email to 
+
+client@inVisement.com
 
 

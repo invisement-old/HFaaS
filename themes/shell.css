@@ -1,0 +1,41 @@
+body {
+  display: flex;
+  flex-flow: row wrap;
+  text-align: center;
+}
+
+body > * {
+  padding: 1em;
+  flex: 1 100%;
+}
+
+header {
+  background: tomato;
+}
+
+footer {
+  background: lightgreen;
+}
+
+article {
+  text-align: left;
+  background: deepskyblue;
+}
+
+nav {
+  background: gold;
+}
+
+aside {
+  background: hotpink;
+}
+
+@media all and (min-width: 600px) {
+  aside { flex: 3 auto; }
+  nav {flex: 2 auto}
+  article    { flex: 8 0px; }
+}
+
+body {
+  padding: 0 1em;
+}

@@ -1,0 +1,75 @@
+
+## hugo config file for invisement static website (mainly blog)
+## to run: hugo (server) --config config/hugoConfig.toml
+
+baseURL = "https://invisement.com/"
+languageCode = "en-us"
+title = "inVisement"
+#themesDir = "themes"
+theme = "inVisement"
+#disqusShortname = "clientrelationship" # delete this to disable disqus comments
+googleAnalytics = "UA-123665575-1"
+publishDir = "staticSite"
+uglyurls = true
+#disableKinds = ["home"]
+
+## to format code blocks
+
+[pygmentsOptions]
+    linenos = "table"
+    pygmentsUseClassic = false
+    pygmentsUseClasses = false
+    pygmentsCodefences = true
+    pygmentsStyle = "dracula"
+    #pygmentsCodefencesGuessSyntax = true
+
+[taxonomies]
+#    tag = "tags"
+
+[params]
+    author = "inVisement"
+    githubUsername = "inVisement"
+    accent = "slateblue"
+    showBorder = true
+    backgroundColor = "white"
+    font = "Roboto" # should match the name on Google Fonts! like Stylish, Lato, Roboto, Sunflower, Raleway
+
+[[menu.main]]
+    url = "https://data.invisement.com?q-stmt/AAPL.csv"
+    name = "Data"
+    weight = 10
+
+[[menu.main]]
+    url = "/api_doc.html"
+    name = "API Docs"
+    weight = 20
+
+[[menu.main]]
+    url = "/blog.html"
+    name = "Blog"
+    weight = 30
+
+[[menu.main]]
+    url = "/about.html"
+    name = "About us"
+    weight = 40
+
+#[[menu.main]]
+#    url = "/tags/"
+#    name = "tags"
+#    weight = 50
+
+
+# Social icons to be shown on the right-hand side of the navigation bar
+# The "name" field should match the name of the icon to be used
+# The list of available icons can be found at http://fontawesome.io/icons/
+
+[[menu.icon]]
+    url = "mailto:client@invisement.com"
+    name = "envelope-o"
+    weight = 10
+
+[[menu.icon]]
+    url = "https://github.com/inVisement/"
+    name = "github"
+    weight = 20
