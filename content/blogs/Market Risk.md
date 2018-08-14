@@ -2,7 +2,7 @@
 title: "Market Risks"
 date: 2018-08-05
 tags: ["Blog", "Market Analysis", "Market Risks", "Trade War", "Prime Rate"]
-card: '<div class="embed-container"><iframe src="//fred.stlouisfed.org/graph/graph-landing.php?g=kPPt&width=670&height=475" scrolling="no" frameborder="0" style="overflow:hidden; allowTransparency="true"></iframe></div><script src="https://fred.stlouisfed.org/graph/js/embed.js" type="text/javascript"></script>'
+card: <img src="https://fred.stlouisfed.org/graph/fredgraph.png?g=kSoC">
 ---
 
 ### Actual Market Risk: LOW
@@ -36,5 +36,4 @@ The populist wrath against immigration, accompanied with low unemployment, might
 
 inVisement uses google trends "bull and bear spread" to measure the investors perceived market risk, which shows investors are **Cautious** (i.e. moderately bearish and highly sensitive to the current market prices).
 
-<script type="text/javascript" src="https://ssl.gstatic.com/trends_nrtr/1513_RC03/embed_loader.js"></script> <script type="text/javascript"> trends.embed.renderExploreWidget("TIMESERIES", {"comparisonItem":[{"keyword":"bull market","geo":"US","time":"2004-01-01 2018-08-11"},{"keyword":"bear market","geo":"US","time":"2004-01-01 2018-08-11"}],"category":0,"property":""}, {"exploreQuery":"date=all&geo=US&q=bull%20market,bear%20market","guestPath":"https://trends.google.com:443/trends/embed/"}); </script>
-
+<object width="100%" height="400" type="text/html" data="/htmls/bull-bear-trend-graph.html"></object>

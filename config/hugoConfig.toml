@@ -1,11 +1,11 @@
 
-## hugo config file for invisement static website (mainly blog)
+## hugo config file for inVisement static website (mainly blog)
 ## to run: hugo (server) --config config/hugoConfig.toml
 
 baseURL = "https://invisement.com/"
 languageCode = "en-us"
 title = "inVisement"
-#themesDir = "themes"
+themesDir = "hugo-themes"
 theme = "inVisement"
 #disqusShortname = "clientrelationship" # delete this to disable disqus comments
 googleAnalytics = "UA-123665575-1"
@@ -29,7 +29,7 @@ pygmentsStyle = "dracula"
 [params]
     author = "inVisement"
     githubUsername = "inVisement"
-    accent = "slateblue"
+    accent = "coral"
     showBorder = true
     backgroundColor = "white"
     font = "Roboto" # should match the name on Google Fonts! like Stylish, Lato, Roboto, Sunflower, Raleway

@@ -4,8 +4,7 @@ card: '<img src="/images/logo.jpg">'
 
 ---
 
-<img src="/images/logo.jpg">
-
+<img width="400" src="/images/logo.png"> 
 ### Market Data Provider to Financial Firms
 
 - <a href='https://data.invisement.com?q-stmt/AAPL.csv'> <button> VIEWER: </button> Explore our data sets </a>

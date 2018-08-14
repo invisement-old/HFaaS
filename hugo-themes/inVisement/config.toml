@@ -1,27 +1,27 @@
 
-## hugo config file for invisement static website (mainly blog)
+## hugo config file for inVisement static website (mainly blog)
 ## to run: hugo (server) --config config/hugoConfig.toml
 
 baseURL = "https://invisement.com/"
 languageCode = "en-us"
 title = "inVisement"
-#themesDir = "themes"
+themesDir = "hugo-themes"
 theme = "inVisement"
 #disqusShortname = "clientrelationship" # delete this to disable disqus comments
 googleAnalytics = "UA-123665575-1"
-publishDir = "staticSite"
+publishDir = ".invisement.com"
 uglyurls = true
 #disableKinds = ["home"]
 
 ## to format code blocks
+pygmentsCodefences = true
+pygmentsStyle = "dracula"
 
-[pygmentsOptions]
-    linenos = "table"
-    pygmentsUseClassic = false
-    pygmentsUseClasses = false
-    pygmentsCodefences = true
-    pygmentsStyle = "dracula"
-    #pygmentsCodefencesGuessSyntax = true
+#pygmentsUseClassic = false
+#pygmentsUseClasses = false
+#pygmentsCodefencesGuessSyntax = true
+#linenos = "table"
+
 
 [taxonomies]
 #    tag = "tags"
@@ -29,24 +29,34 @@ uglyurls = true
 [params]
     author = "inVisement"
     githubUsername = "inVisement"
-    accent = "slateblue"
+    accent = "coral"
     showBorder = true
     backgroundColor = "white"
     font = "Roboto" # should match the name on Google Fonts! like Stylish, Lato, Roboto, Sunflower, Raleway
 
 [[menu.main]]
     url = "https://data.invisement.com?q-stmt/AAPL.csv"
-    name = "Data"
+    name = "Explore Datasets"
     weight = 10
 
 [[menu.main]]
-    url = "/api_doc.html"
-    name = "API Docs"
+    url = "/market-view.html"
+    name = "Market View"
+    weight = 15
+
+[[menu.main]]
+    url = "/invisement-portfolio.html"
+    name = "Portfolio"
+    weight = 17
+
+[[menu.main]]
+    url = "/api-doc.html"
+    name = "API Doc"
     weight = 20
 
 [[menu.main]]
-    url = "/blog.html"
-    name = "Blog"
+    url = "/blogs.html"
+    name = "Blogs"
     weight = 30
 
 [[menu.main]]

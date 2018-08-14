@@ -1,11 +1,21 @@
 ---
 title: "inVisement Portfolio Holdings"
-date: 2018-08-09
+date: 2018-08-14
 tags: ["Blog", "inVisement Portfolio", "Stock Recommendation"]
-card: <img src="/images/inVisement-graph.png">
+card: <img src="images/inVisement-graph.png">
 
 ---
 
+## inVisement Performance:
+We are very thrilled by our extraordinary performance for the past 3 months season: over 30%
+
+<pre>
+Period:             3 months ending August 14, 2018  
+inVisement Return:  31.4%  
+S&P 500 Return:     3.7%  
+Nasdaq 100 Return:  6.7%  
+Dow Jones Return:   1.7% 
+</pre>
 
 ## inVisement Position: Hold
 inVisement portfolio consists of 

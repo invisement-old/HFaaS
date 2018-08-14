@@ -2,7 +2,7 @@
 title: "About"
 date: 2018-08-08
 tags: ["About us", "inVisement"]
-card: '<img src="/images/corp-banner.jpg" width="100%">'
+card: '<img src="/images/logo.png" width="100%">'
 
 ---
 
