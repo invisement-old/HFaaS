@@ -18,3 +18,6 @@
     
 ## copy exclude to git
     cp config/exclude.txt .git/info/exclude.txt
+
+
+

@@ -9,7 +9,9 @@ card: '<img src="/images/logo.jpg">'
 
 - <a href='https://data.invisement.com?q-stmt/AAPL.csv'> <button> VIEWER: </button> Explore our data sets </a>
 
-- <a href="/market-view.html">  <button> MARKET: </button> See market graph and inVisement analysis </a>
+- <a href="/market-view.html">  <button> MARKET: </button> See market graph and market analysis </a>
+
+- <a href="/risk-analysis.html">  <button> RISK: </button> See market risk analysis from inVisement</a>
 
 - <a href="/invisement-portfolio.html">  <button> PORTFOLIO: </button> Look at inVisement portfolio </a>
 

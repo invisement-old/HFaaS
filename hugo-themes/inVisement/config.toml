@@ -45,6 +45,11 @@ pygmentsStyle = "dracula"
     weight = 15
 
 [[menu.main]]
+    url = "/risk-analysis.html"
+    name = "Risk Analysis"
+    weight = 16
+
+[[menu.main]]
     url = "/invisement-portfolio.html"
     name = "Portfolio"
     weight = 17

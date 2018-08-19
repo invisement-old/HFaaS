@@ -9,13 +9,13 @@ card: <img src="images/inVisement-graph.png">
 ## inVisement Performance:
 We are very thrilled by our extraordinary performance for the past 3 months season: over 30%
 
-<pre>
+```md
 Period:             3 months ending August 14, 2018  
 inVisement Return:  31.4%  
 S&P 500 Return:     3.7%  
 Nasdaq 100 Return:  6.7%  
 Dow Jones Return:   1.7% 
-</pre>
+```
 
 ## inVisement Position: Hold
 inVisement portfolio consists of 
@@ -35,18 +35,20 @@ We are bullish and aiming at 25% overall return of our portfolio for 2018:
 
 ## Stocks
 
+```md
 Company     | Symbol    | Shares    | $ Cost
---- | --- | --- | ---
+---         | ---       | ---       | ---
 Alphabet    | GOOG      | 50        | 55030
 MongoDB     | MDB       | 610       | 23033
 NVIDIA      | NVDA      | 130       | 33012
 Square      | SQ        | 440       | 25493
 Salesforce  | CRM       | 200       | 23868
 Twitter     | TWTR      | 830       | 27639
-
+```
 
 ## Call Options
 
+```md
 Stock       | $ Strike  | Expiration| Contacts          | $ Cost
 ---         | ---       | ---       | ---               | ---
 QQQ         | 183       | 2019-06-21| 10                | 10260
@@ -60,8 +62,10 @@ AAPL        | 220       | 2020-01-17| 10                | 11550
 AAPL        | 245       | 2020-01-17| 10                | 10000
 DIA         | 270       | 2020-01-17| 10                | 10100
 GS          | 280       | 2020-01-17| 10                | 10000
+```
 
 ## Cash
+```md
 $50000
-
+```
 
