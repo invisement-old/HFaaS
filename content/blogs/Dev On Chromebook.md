@@ -47,8 +47,9 @@ cd Downloads
 
 # Install `git` and clone repo
 ```bash
-sudo install git
-sudo git clone https://github.com/inVisement/HFaaS.git ~/PROJECTS/ #change repo address
+sudo apt-get install git
+sudo git clone https://your-repo-address your-local-repo-folder #change repo address like
+#sudo git clone https://github.com/inVisement/HFaaS.git ~/PROJECTS/inVisement
 git config --global user.name "your-user-name"
 git config --global user.email "your-email"
 ```
