@@ -4,19 +4,18 @@ draft: true
 
 ---
 
+<figure id="treasury_spread_figure" style="width: 700px; height:400px;"> </figure>
 
-
-<div id="test-div"> </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/4.1.0/echarts-en.min.js" integrity="sha256-x8R4YOgRkrX/cMbupOzglWi/gSM/WD8bfFHrE+r5TPM=" crossorigin="anonymous"></script>
+<script src="/js/ecStat.min.js"></script>
 <script src="/js/charts.js"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 
 
-<script> func(); </script>
+
+<script> chart_treasury_spread('treasury_spread_figure'); </script>
 
 
-THis is a test.
 
-
+<figure id="test" style="width: 700px; height:400px;"> </figure>
