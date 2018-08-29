@@ -2,7 +2,6 @@
 import pandas as pd
 import os
 
-
 ### Thses are default global variables (setting) for python apps in this package
 ## For extract_sec module
 SEC_DATA_SETS_INDEX = "https://www.sec.gov/dera/data/financial-statement-data-sets.html"
@@ -41,13 +40,4 @@ QUARTERLY_FOLDER = "data/q/"
 YEARLY_FOLDER = "data/y/"
 CIK2TICKER = "data/basic/company.csv"
 FILL_MISSING_SINCE = "19590101"
-
-
-
-### User can change the global variables (setting) in config/app_config.py file
-import sys
-sys.path.append('config/')
-from appConfig import *
-
-
 

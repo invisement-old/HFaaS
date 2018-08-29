@@ -1,14 +1,11 @@
 ---
-title: "Market Risks"
+title: "Potential Risk Factors"
 date: 2018-08-05
 tags: ["Blog", "Market Analysis", "Market Risks", "Trade War", "Prime Rate"]
-card: <img src="https://fred.stlouisfed.org/graph/fredgraph.png?g=kSoC">
+card: <img src="/images/market-risk.jpg">
+
 ---
 
-### Actual Market Risk: LOW
-inVisement's primary measure of actual financial risk is (**the high yield bonds spread**)[https://www.investopedia.com/terms/h/high-yield-bond-spread.asp], which indicates a very low risk market (see above chart). 
-
-### Potential Risk Factors
 The US economy is growing fast and the unemployment rate is very low, however there are crawling risks that might turn the current bull into a bear:
 
 - **Higher Interest Rates**
@@ -32,8 +29,3 @@ The White House, with its **mercantilism** approach, is too optimistic about the
 - **Skill Shortage**
 The populist wrath against immigration, accompanied with low unemployment, might cause lack of skilled workers to fill the jobs that an economy needs when growing faster than usual. This is one of the biggest threats for sustainability of the high economic growth.
 
-### Perceived Market Risk
-
-inVisement uses google trends "bull and bear spread" to measure the investors perceived market risk, which shows investors are **Cautious** (i.e. moderately bearish and highly sensitive to the current market prices).
-
-<object width="100%" height="400" type="text/html" data="/htmls/bull-bear-trend-graph.html"></object>

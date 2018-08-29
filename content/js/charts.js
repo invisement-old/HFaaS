@@ -1,103 +1,97 @@
-///*
-https://fred.stlouisfed.org/series/UMCSENT
-https://fred.stlouisfed.org/series/A006RE1Q156NBEA
 
-*/////
+/// attention: chart name and chart location id must match
+
+fred_series = {
+    key: "88b9092ad3db013e454ea78d5a1084c9",
+    endpoint: "https://api.stlouisfed.org/fred/series/observations",
+    file_type: "json",
+    "High Yield Spread": {
+        id: "BAMLH0A0HYM2EY",
+        subtitle: "10 year treasury yield minus 2 year treasury yield",
+    },
+    "Treasury Yield Spread": {
+        id: "T10Y2Y",
+        subtitle: "Risky Corporate Bond Yield minus Treasury Bond Yield"
+    },
+    "Consumer Sentiment": {
+        id: "UMCSENT",
+        subtitle: "Consumer Sentiment Index (1966:Q1=100)"
+    },
+    "Investment to GDP": {
+        id: "A006RE1Q156NBEA",
+        subtitle: "Share of Investment from GDP in Percent"
+    }
+}
 
 
+function chart_risks_page () {
+    indexes = [1, 60]
+    historical_length = 255*30
 
-/////////           FRED data fetch and chart       /////
-myFredApiKey = "88b9092ad3db013e454ea78d5a1084c9"
-high_yield_series = "BAMLH0A0HYM2EY"
-treasury_spread_series = "T10Y2Y"
-fred_endpoint = "http://api.stlouisfed.org/fred/series/observations"
-fred_file_type = "json"
+    economic_risks = chart_fred ("Treasury Yield Spread")
+    .then(data => data['value'].slice(-historical_length))
+    .then(numbers => quantiles (indexes, numbers))
 
-// https://api.stlouisfed.org/fred/series/observations?series_id=T10Y2Y&api_key=88b9092ad3db013e454ea78d5a1084c9&file_type=json
+    financial_risks = chart_fred ("High Yield Spread")
+    .then(data => data['value'].slice(-historical_length))
+    .then(numbers => quantiles (indexes, numbers))
 
-function chart_treasury_spread (location) {
-    //    url = fred_endpoint + "?series_id=" + treasury_spread_series + "&api_key=" + myFredApiKey + "&file_type=" + fred_file_type
-    fetch("http://127.0.0.1:8887/fred.json")
+    perceived_risks = chart_fred ("Consumer Sentiment")
+    .then(data => data['value'].slice(-historical_length))
+    .then(numbers => quantiles (indexes, numbers))
+    .then(risks => risks.map(risk => 1-risk))
+
+    Promise.all([economic_risks, financial_risks, perceived_risks])
+    //.then(x => console.log(x[0]))
+    .then(risks => chart_gauge ("Risk Gauge", risks[0], risks[1], risks[2]))
+}
+
+
+function chart_fred (name) {
+    /* fetch fred series, grab and return observations, draw chart in location */
+    // https://api.stlouisfed.org/fred/series/observations?series_id=T10Y2Y&api_key=88b9092ad3db013e454ea78d5a1084c9&file_type=json
+    url = fred_series.endpoint + "?series_id=" + fred_series[name].id + "&api_key=" + fred_series.key + "&file_type=" + fred_series.file_type
+    url = "http://127.0.0.1:8887/fred.json" // for test purpose only
+    return fetch(url, {mode: 'cors'})
     .then(res => res.json())
-    .then(function(input){
-        timeSeriesChartOption['dataset']['source'] = input['observations'];
-        treasurySpreadChart.setOption(timeSeriesChartOption);
-        
-        // function quantile (data, past, history)
-        data = input['observations'].map(x => Number(x['value']))
-        data = data.slice(-255*30) // past 30 years
-        var current_value = data.slice(-1)[0];
-        var past_value = data.slice(-60)[0];
-        data.sort(function(x,y){
-            return x-y
-        });
-        current_quantile = data.indexOf(current_value)/data.length;
-        past_quantile = data.indexOf(past_value)/data.length;
-        return [current_quantile, past_quantile]
-
-        treasurySpreadChart = echarts.init(document.getElementById(location));
+    .then(function(res){
+        observations = res['observations']
+        treasurySpreadChart = echarts.init(document.getElementById(name));
         timeSeriesChartOption['title'] = {
             left: 'center', 
-            text: 'Economic Risk Spread', 
-            subtext: '10 year treasury yield minus 2 year treasury yield'
+            text: name, 
+            subtext: fred_series[name].subtitle
         };
-    
-        console.log(data.slice(10), idx/data.length);
-    });
-
-}
-
-
-function chart_fred (location, fred_series, historical_years, quantile_indexes) {
-    /* fetch fred series, grab observations, draw chart in location, calc and return quantiles */
-    historical_years = historical_years || 30*255 // in years
-    quatile_indexes = quantile_indexes || [0, 60] // return the quatile of values from data with these indexes
-    url = fred_endpoint + "?series_id=" + fred_series + "&api_key=" + myFredApiKey + "&file_type=" + fred_file_type
-    fetch("http://127.0.0.1:8887/fred.json")
-    .then(res => res.json())
-    .then(function(input){
-        timeSeriesChartOption['dataset']['source'] = input['observations'];
+        data = {
+            date: observations.map(row => row['date']),
+            value: observations.map(row => Number(row['value'])),
+        }
+        timeSeriesChartOption.xAxis.data = data['date']
+        timeSeriesChartOption.series[0].data = data['value']
         treasurySpreadChart.setOption(timeSeriesChartOption);
-        numbers = input['observations'].map(x => Number(x['value']))
-
-        treasurySpreadChart = echarts.init(document.getElementById(location));
-        timeSeriesChartOption['title'] = {
-            left: 'center', 
-            text: 'Economic Risk Spread', 
-            subtext: '10 year treasury yield minus 2 year treasury yield'
-        };
-    
-
-}
-
-function calculate_quantiles (numbers, value_indexes, length_of_data_to_use) {
-    value_indexes = value_indexes || [0, 60]
-    length_of_data_to_use = length_of_data_to_use || 255*30 // default to 30 years daily data
-    //data = input['observations'].map(x => Number(x['value']))
-    numbers = numbers.slice(-length_of_data_to_use) // grab only past 30 years
-    values = quantile_indexes.map(index => numbers.slice(numbers.length-index)[0]) // grab values from end of data
-    //var current_value = data.slice(-1)[0];
-    //var past_value = data.slice(-60)[0];
-    numbers.sort(function(x,y){
-        return x-y
+        return data
     });
-    quantiles = values.map(value => data.indexOf(value)/data.length)
-    //current_quantile = data.indexOf(current_value)/data.length;
-    //past_quantile = data.indexOf(past_value)/data.length;
-    return quantiles
 }
 
-/////////       Risk Gauge      ///////////
-
-function chart_risk_gauge (div, financial_risks, economic_risks, perceived_risks) {
-    var riskGauge = echarts.init(document.getElementById(div));
-    riskGauge_option.series[0].data = [{value: financial_risks[0], name: 'Financial Risk'}, {value: financial_risks[1], name:'last year financial risk', pointer: {width: 2}}] // set values for financial risk gauge
-    riskGauge_option.series[1].data = [{value: economic_risks[0], name: 'Economic Risk'}, {value: economic_risks[1], name:'last year economic risk', pointer: {width: 2}}] //set values for economic risk gauge
-    riskGauge_option.series[2].data = [{value: perceived_risks[0], name: 'Perceived Risk'}, {value: perceived_risks[1], name:'last year perceived risk', pointer: {width: 2}}] //set values for perceived risk gauge
-    riskGauge.setOption(riskGauge_option, true);
+function chart_gauge (name, financial_risks, economic_risks, perceived_risks) {
+    var riskGauge = echarts.init(document.getElementById(name));
+    gaugeChartOption.series[0].data = [
+        {value: parseInt(financial_risks[0]*100), name: 'Financial Risk'}, 
+        {value: parseInt(financial_risks[1]*100), name:'last year financial risk', pointer: {width: 2}}
+    ] // set values for financial risk gauge
+    gaugeChartOption.series[1].data = [
+        {value: parseInt(economic_risks[0]*100), name: 'Economic Risk'}, 
+        {value: parseInt(economic_risks[1]*100), name:'last year economic risk', pointer: {width: 2}}
+    ] //set values for economic risk gauge
+    gaugeChartOption.series[2].data = [
+        {value: parseInt(perceived_risks[0]*100), name: 'Perceived Risk'}, 
+        {value: parseInt(perceived_risks[1]*100), name:'last year perceived risk', pointer: {width: 2}}
+    ] //set     qvalues for perceived risk gauge
+    riskGauge.setOption(gaugeChartOption, true);
 }
 
-riskGauge_option = {
+gaugeChartOption = {
+    title: {text: "Risk Measures", subtext: "Tick Hand: Current Risk\n\nThin Hand: Last Quarter Risk"},
     tooltip: {
         formatter: "{b} : {c}%"
     },
@@ -150,9 +144,6 @@ riskGauge_option = {
     ]
 };
 
-
-
-
 timeSeriesChartOption = {
     legend: {data: ['']},
     tooltip: {
@@ -162,31 +153,35 @@ timeSeriesChartOption = {
         feature: {
             restore: {},
             saveAsImage: {},
-            magicType: {type: ['line', 'bar']},
-            dataView: {readOnly: false}
+            magicType: {type: ['line', 'bar', 'stack', 'tiled']},
+            dataView: {},
         }
     },
-    dataset: {
-        dimensions: ['date', 'value'],
-    },
+    yAxis: {},
     xAxis: {type: 'category', scale: true},
     yAxis: {type: 'value', scale: true, axisLabel: {formatter: '{value}%'}},
-    series: [{
-            type: 'bar', 
+    series: [
+        {
+            type: 'line', 
             smooth: true, 
             symbol: 'none', 
             sampling: 'average', 
-            ///////////// HERE
-            // *************************
-
-
-            markLine: {data:[{type: 'average'}, {value: 20, valueIndex: 1, xAxis: '2018-04-10', yAxis: 2.0}]},
-            markPoint: {data: [{name: 'Current Risk', xAxis: '2018-04-10', yAxis: 2.0}]},
-            itemStyle: {emphasis: {borderColor: 'blue', borderWidth: 3}}
-        }],
+            markLine: {data:[{type: 'average'}]},
+            itemStyle: {emphasis: {borderColor: 'blue', borderWidth: 2}}
+        }
+    ],
     dataZoom: [{startValue: '1985-01-01'}],
 };
 
+function quantiles (value_indexes, array) {
+    value_indexes = value_indexes || [1, 60]
+    values = value_indexes.map(index => array.slice(-index)[0]) // grab values from end of data
+    array.sort(function(x,y){
+        return x-y
+    });
+    value_quantiles = values.map(value => array.indexOf(value)/array.length)
+    return value_quantiles
+}
 
 
 /////////           END         ///////
